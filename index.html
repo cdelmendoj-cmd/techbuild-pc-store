@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechBuild PC Store | Philippines</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">TechBuild PCs</div>
+        <div class="nav-cart">🛒 Cart: <span id="cart-count">0</span></div>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1>Custom Built PCs</h1>
+        <p>Choose the perfect system for your budget & needs</p>
+    </header>
+
+    <!-- Product Cards Section -->
+    <main class="products-grid">
+        <!-- Entry Level PC -->
+        <div class="product-card entry-tier">
+            <span class="ticker">entry level</span>
+            <h2>entry level</h2>
+            <div class="product-image">🖥️</div>
+            <div class="specs-block">
+                <h4>Full Specifications</h4>
+                <p>✅ Processor: Intel i3-14100 / AMD Ryzen 3 4300G</p>
+                <p>✅ Memory: 8GB DDR4 3200MHz</p>
+                <p>✅ Storage: 256GB NVMe SSD</p>
+                <p>✅ Graphics: Integrated Intel/AMD Radeon</p>
+                <p>✅ OS: Free DOS / Windows 11 Ready</p>
+                <p>✅ Warranty: 1 Year Store Warranty</p>
+            </div>
+            <div class="price-area">
+                <p class="label">Total Price:</p>
+                <p class="price">₱18,999</p>
+            </div>
+            <div class="buy-actions">
+                <button class="btn-cart" data-name="Home & Student PC" data-price="18999">Add to Cart</button>
+                <button class="btn-detail">View Full Details</button>
+            </div>
+        </div>
+
+        <!-- Mid Range PC -->
+        <div class="product-card mid-tier">
+            <span class="ticker">Mid Range</span>
+            <h2>mid range</h2>
+            <div class="product-image">🎮</div>
+            <div class="specs-block">
+                <h4>Full Specifications</h4>
+                <p>✅ Processor: Intel i5-14400F / AMD Ryzen 5 7600</p>
+                <p>✅ Memory: 16GB DDR5 5200MHz</p>
+                <p>✅ Storage: 512GB Gen4 NVMe SSD</p>
+                <p>✅ Graphics: RTX 3050 6GB / RX 6600 8GB</p>
+                <p>✅ PSU: 550W 80+ Bronze Certified</p>
+                <p>✅ Warranty: 2 Years Store Warranty</p>
+            </div>
+            <div class="price-area">
+                <p class="label">Total Price:</p>
+                <p class="price">₱42,999</p>
+            </div>
+            <div class="buy-actions">
+                <button class="btn-cart" data-name="Gaming & Creator PC" data-price="42999">Add to Cart</button>
+                <button class="btn-detail">View Full Details</button>
+            </div>
+        </div>
+
+        <!-- High Performance PC -->
+        <div class="product-card high-tier">
+            <span class="ticker">High Performance</span>
+            <h2> high performance </h2>
+            <div class="product-image">🚀</div>
+            <div class="specs-block">
+                <h4>Full Specifications</h4>
+                <p>✅ Processor: Intel i7-14700K / AMD Ryzen 9 7900X</p>
+                <p>✅ Memory: 32GB DDR5 6000MHz RGB</p>
+                <p>✅ Storage: 1TB Gen4 SSD + 2TB 7200RPM HDD</p>
+                <p>✅ Graphics: RTX 4070 Ti Super / RX 7900 XT</p>
+                <p>✅ Cooling: 240mm Liquid Cooler + RGB Fans</p>
+                <p>✅ Warranty: 3 Years Store Warranty + Free Service</p>
+            </div>
+            <div class="price-area">
+                <p class="label">Total Price:</p>
+                <p class="price">₱98,999</p>
+            </div>
+            <div class="buy-actions">
+                <button class="btn-cart" data-name="Pro Workstation PC" data-price="98999">Add to Cart</button>
+                <button class="btn-detail">View Full Details</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Detail Popup -->
+    <div id="detail-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title"></h3>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <p>📍 Based in Metro Manila | 🚚 Nationwide Shipping | ✅ Cash on Delivery Available</p>
+        <p>© 2026 TechBuild PC Store. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
