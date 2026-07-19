@@ -1,3 +1,12 @@
+
+
+Skip to content
+Using Gmail with screen readers
+Conversations
+27% of 15 GB used
+Terms · Privacy · Program Policies
+Last account activity: 1 minute ago
+Details
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,6 +101,17 @@
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 0 10px rgba(255,110,199,.6);
   }
+
+  .theme-btn{
+    width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(160deg, var(--panel-2), var(--panel));
+    border:1px solid var(--line);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:var(--high);
+    transition:all .2s ease;
+  }
+  .theme-btn:hover{border-color:var(--mid);transform:translateY(-1px);box-shadow:0 6px 18px var(--mid-glow);}
+  .theme-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;}
+  .nav-right{display:flex;align-items:center;gap:10px;}
  
   /* ================= VIEWS ================= */
   .view{display:none;}
@@ -110,6 +130,18 @@
       radial-gradient(circle at 15% 15%, rgba(124,108,240,0.16), transparent 45%),
       radial-gradient(circle at 85% 20%, rgba(72,230,218,0.10), transparent 40%),
       radial-gradient(circle at 75% 90%, rgba(245,185,66,0.10), transparent 45%);
+  }
+
+  .bg-orb{
+    position:absolute;border-radius:50%;
+    filter:blur(70px);opacity:.4;z-index:0;pointer-events:none;
+    animation:orbFloat 16s ease-in-out infinite;
+    mix-blend-mode:screen;
+  }
+  @keyframes orbFloat{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(40px,-30px) scale(1.12);}
+    66%{transform:translate(-30px,25px) scale(0.94);}
   }
  
   /* ================= HOME HERO ================= */
@@ -197,7 +229,7 @@
   .why-card p{color:var(--ink-dim);font-size:13.5px;line-height:1.55;margin:0;}
  
   /* ================= CONTACT ================= */
-  .contact-section{position:relative;z-index:2;padding:20px 20px 90px;}
+  .contact-section{position:relative;z-index:2;padding:20px 20px 40px;}
   .contact-grid{
     display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
     max-width:1000px;margin:0 auto;
@@ -213,6 +245,23 @@
   .contact-label{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);}
   .contact-value{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16.5px;color:var(--ink);}
   .contact-sub{font-size:12px;color:var(--ink-dim);}
+
+  /* ================= SOCIAL ROW ================= */
+  .social-section{position:relative;z-index:2;text-align:center;padding:10px 20px 50px;}
+  .social-label{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-dim);margin:0 0 18px;
+  }
+  .social-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .social-btn{
+    width:46px;height:46px;border-radius:50%;
+    background:linear-gradient(165deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-dim);transition:all .22s ease;
+  }
+  .social-btn svg{width:19px;height:19px;fill:currentColor;}
+  .social-btn:hover{color:#fff;transform:translateY(-4px);box-shadow:0 10px 24px var(--mid-glow);border-color:var(--mid);}
  
   footer{text-align:center;color:var(--ink-dim);font-size:11.5px;padding:30px 20px 40px;font-family:'Rajdhani',sans-serif;letter-spacing:.04em;position:relative;z-index:2;}
  
@@ -232,6 +281,27 @@
     animation:sheen 7s linear infinite;
   }
   .products-hero p{color:var(--ink-dim);font-size:14.5px;max-width:520px;margin:0 auto;line-height:1.6;}
+
+  /* ================= LIMITED DROP BANNER ================= */
+  .limited-banner{
+    max-width:1040px;margin:0 auto 30px;position:relative;overflow:hidden;
+    border-radius:20px;border:1px solid rgba(255,110,199,0.4);
+    background:linear-gradient(115deg, rgba(255,110,199,0.12), rgba(124,108,240,0.12) 50%, rgba(245,185,66,0.12));
+    background-size:220% 220%;animation:foilmove 7s ease-in-out infinite;
+    padding:22px 26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .limited-banner .pulse-dot{
+    width:11px;height:11px;border-radius:50%;background:var(--pink);flex:0 0 11px;
+    box-shadow:0 0 0 0 rgba(255,110,199,0.7);animation:pulseDot 1.6s infinite;
+  }
+  @keyframes pulseDot{
+    0%{box-shadow:0 0 0 0 rgba(255,110,199,0.6);}
+    70%{box-shadow:0 0 0 10px rgba(255,110,199,0);}
+    100%{box-shadow:0 0 0 0 rgba(255,110,199,0);}
+  }
+  .limited-banner-text{flex:1;min-width:220px;}
+  .limited-banner-text b{font-family:'Rajdhani',sans-serif;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:13px;color:var(--pink);}
+  .limited-banner-text p{margin:4px 0 0;color:var(--ink-dim);font-size:13px;}
  
   .search-row{max-width:520px;margin:0 auto 22px;position:relative;}
   .search-row svg{
@@ -300,6 +370,8 @@
   .card[data-rarity="high"]{border-color:rgba(245,185,66,0.55);}
   .card[data-rarity="high"]{box-shadow:0 0 0 1px rgba(245,185,66,.15), 0 18px 42px -16px var(--high-glow);}
   .card.sold-out{filter:grayscale(0.65);opacity:.55;}
+  .card.limited{border-color:rgba(255,110,199,0.6);}
+  .card.limited{box-shadow:0 0 0 1px rgba(255,110,199,.18), 0 18px 42px -16px rgba(255,110,199,.4);}
  
   .holo{
     position:absolute;inset:0;
@@ -307,7 +379,7 @@
     mix-blend-mode:overlay;opacity:0;transition:opacity .25s ease;pointer-events:none;z-index:3;
   }
   .card:hover .holo{opacity:1;}
-  .card[data-rarity="high"] .foil{
+  .card[data-rarity="high"] .foil, .card.limited .foil{
     position:absolute;inset:0;
     background:linear-gradient(115deg, transparent 20%, rgba(245,185,66,0.16) 35%, rgba(255,110,199,0.16) 50%, rgba(72,230,218,0.16) 65%, transparent 80%);
     background-size:220% 220%;animation:foilmove 6s ease-in-out infinite;pointer-events:none;z-index:2;
@@ -339,6 +411,17 @@
     box-shadow:0 0 12px var(--high-glow);
     white-space:nowrap;
   }
+  .limited-tag{
+    position:absolute;top:12px;right:12px;z-index:4;
+    display:flex;align-items:center;gap:5px;
+    font-family:'Rajdhani',sans-serif;font-weight:800;font-size:9.5px;
+    letter-spacing:.08em;text-transform:uppercase;color:#fff;
+    padding:4px 9px;border-radius:999px;
+    background:linear-gradient(120deg,var(--pink),#c95bd6);
+    box-shadow:0 0 12px rgba(255,110,199,.55);
+    white-space:nowrap;
+  }
+  .limited-tag .pulse-dot{width:6px;height:6px;flex:0 0 6px;background:#fff;}
  
   .price-tag{
     position:absolute;top:10px;right:10px;z-index:4;
@@ -346,6 +429,7 @@
     border:1px solid var(--line);border-radius:12px;padding:6px 10px;
     font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:var(--ink);
   }
+  .card.limited .price-tag{top:38px;}
  
   .stock-tag{
     position:absolute;bottom:14px;left:14px;z-index:5;
@@ -370,6 +454,7 @@
   .card[data-rarity="budget"] .product-photo{color:var(--budget);}
   .card[data-rarity="mid"] .product-photo{color:var(--mid);}
   .card[data-rarity="high"] .product-photo{color:var(--high);}
+  .card.limited .product-photo{color:var(--pink);}
   .product-photo::after{
     content:'';position:absolute;bottom:0;left:0;right:0;height:40%;
     background:linear-gradient(180deg, transparent, rgba(0,0,0,0.25));
@@ -394,6 +479,22 @@
   .add-fab.pulse{animation:pulse .35s ease;}
   .add-fab:disabled{background:#4a4460;cursor:not-allowed;box-shadow:none;}
   @keyframes pulse{50%{transform:scale(0.85);}}
+
+  .card-stepper{
+    position:absolute;bottom:12px;right:12px;z-index:5;
+    display:flex;align-items:center;gap:7px;
+    background:rgba(12,10,22,0.7);backdrop-filter:blur(6px);
+    border:1px solid var(--line);border-radius:999px;padding:5px 7px;
+  }
+  .card-stepper button{
+    width:22px;height:22px;border-radius:50%;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--mid),#5a4dc9);color:#fff;
+    font-size:14px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;
+    transition:transform .12s ease;
+  }
+  .card-stepper button:hover{transform:scale(1.1);}
+  .card-stepper button:disabled{background:#4a4460;cursor:not-allowed;transform:none;}
+  .card-stepper span{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:var(--ink);min-width:14px;text-align:center;}
  
   /* ================= DECK PANEL ================= */
   .overlay{position:fixed;inset:0;background:rgba(6,5,12,0.6);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:140;}
@@ -450,6 +551,9 @@
   .modal-specs .row{display:flex;justify-content:space-between;font-size:12.5px;}
   .modal-specs .row span:first-child{color:var(--ink-dim);}
   .modal-specs .row span:last-child{color:var(--cyan);font-weight:700;}
+  .modal-stepper{display:flex;align-items:center;gap:12px;justify-content:center;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px;}
+  .modal-stepper button{width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--mid),#5a4dc9);color:#fff;font-size:16px;font-weight:700;}
+  .modal-stepper span{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;min-width:20px;text-align:center;}
   @media (max-width:640px){
     .modal-icon-zone{flex:0 0 auto;min-height:170px;}
     .modal-body{border-left:none;border-top:1px solid var(--line);}
@@ -516,11 +620,56 @@
   .dev-questions h3{font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--high);margin:0 0 14px;}
   .dev-questions ol{margin:0;padding-left:20px;color:var(--ink-dim);font-size:14px;line-height:2;}
   .dev-questions ol li{margin-bottom:4px;}
+
+  /* ================= ABOUT VIEW ================= */
+  .about-hero{text-align:center;padding:50px 20px 20px;}
+  .about-hero .eyebrow{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:.4em;color:var(--cyan);text-transform:uppercase;margin:0 0 12px;}
+  .about-hero h1{
+    font-family:'Orbitron',sans-serif;font-weight:800;font-size:clamp(30px,4.5vw,46px);margin:0 0 12px;
+    background:linear-gradient(100deg, var(--ink) 20%, var(--mid) 45%, var(--pink) 60%, var(--high) 80%, var(--ink) 100%);
+    background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s linear infinite;
+  }
+  .about-hero p{color:var(--ink-dim);font-size:14.5px;max-width:640px;margin:0 auto;line-height:1.7;}
+  .about-story{
+    max-width:820px;margin:34px auto 10px;padding:30px 32px;
+    background:linear-gradient(165deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);border-radius:20px;
+    color:var(--ink-dim);font-size:14.5px;line-height:1.8;
+  }
+  .about-story h3{font-family:'Rajdhani',sans-serif;color:var(--ink);font-size:16px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 10px;}
+  .about-story p{margin:0 0 14px;}
+  .about-story p:last-child{margin-bottom:0;}
+  .about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:34px auto 70px;padding:0 20px;}
+  .about-card{
+    background:linear-gradient(165deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);border-radius:18px;padding:26px 22px;
+    opacity:0;transform:translateY(20px);
+  }
+  .about-card.reveal{animation:revealUp .6s ease forwards;}
+  .about-card h3{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:17px;margin:0 0 8px;color:var(--cyan);}
+  .about-card p{color:var(--ink-dim);font-size:13.5px;line-height:1.55;margin:0;}
  
   @media (max-width:720px){
-    .stats-row,.why-grid,.contact-grid,.payment-grid,.dev-grid{grid-template-columns:1fr;}
+    .stats-row,.why-grid,.contact-grid,.payment-grid,.dev-grid,.about-grid{grid-template-columns:1fr;}
     .nav-links{display:none;}
   }
+
+  /* ================= LIGHT MODE ================= */
+  [data-theme="light"]{
+    --bg:#f3f1fb;
+    --bg-2:#e9e6f7;
+    --panel:#ffffff;
+    --panel-2:#f3f0fc;
+    --line:rgba(30,20,70,0.09);
+    --ink:#1d1732;
+    --ink-dim:#665f88;
+  }
+  [data-theme="light"] .navbar{background:rgba(255,255,255,0.75);}
+  [data-theme="light"] .theme-btn{color:var(--mid);}
+  [data-theme="light"] .rarity-tag,
+  [data-theme="light"] .price-tag,
+  [data-theme="light"] .stock-tag{background:rgba(255,255,255,0.7);}
+  [data-theme="light"] .best-seller-tag{color:#241a05;}
 </style>
 </head>
 <body>
@@ -531,19 +680,28 @@
     <button class="nav-link active" data-view="home">Home</button>
     <button class="nav-link" data-view="products">Products</button>
     <button class="nav-link" data-view="payment">Payment</button>
+    <button class="nav-link" data-view="about">About Us</button>
     <button class="nav-link" data-view="developers">Developers</button>
   </div>
-  <button class="deck-btn" id="deckBtn">
-    <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></svg>
-    DECK
-    <span class="deck-badge" id="deckBadge" style="display:none;">0</span>
-  </button>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" title="Toggle light / dark mode">
+      <svg id="themeIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+    </button>
+    <button class="deck-btn" id="deckBtn">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></svg>
+      DECK
+      <span class="deck-badge" id="deckBadge" style="display:none;">0</span>
+    </button>
+  </div>
 </nav>
  
 <!-- ================= HOME VIEW ================= -->
 <section id="homeView" class="view active">
   <div class="home-stage">
     <canvas id="bgCanvas"></canvas>
+    <div class="bg-orb" style="width:340px;height:340px;top:-60px;left:-80px;background:var(--mid);animation-delay:0s;"></div>
+    <div class="bg-orb" style="width:280px;height:280px;top:20%;right:-90px;background:var(--cyan);animation-delay:-5s;"></div>
+    <div class="bg-orb" style="width:260px;height:260px;bottom:-60px;left:30%;background:var(--pink);animation-delay:-9s;"></div>
     <div class="home-hero">
       <p class="eyebrow">// quezon city, philippines</p>
       <h1 class="store-name"><span class="glow">TECHBUILD</span><span class="pc-tag">P C — B U I L D   Y O U R   A R S E N A L</span></h1>
@@ -604,6 +762,24 @@
         </div>
       </div>
     </div>
+
+    <div class="social-section">
+      <p class="social-label">Follow the build</p>
+      <div class="social-row">
+        <a class="social-btn" href="#" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M13.5 21v-7.7h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.23-.12-2.34-.12-2.32 0-3.9 1.42-3.9 4.02v2.24H7.4v3h2.5V21h3.6z"/></svg>
+        </a>
+        <a class="social-btn" href="#" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c2.7 0 3 0 4.1.06 1.07.05 1.8.22 2.43.47.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.25.63.42 1.36.47 2.43.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1.07-.22 1.8-.47 2.43-.26.66-.6 1.22-1.15 1.77-.55.55-1.11.9-1.77 1.15-.63.25-1.36.42-2.43.47-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1.07-.05-1.8-.22-2.43-.47-.66-.26-1.22-.6-1.77-1.15-.55-.55-.9-1.11-1.15-1.77-.25-.63-.42-1.36-.47-2.43C2 15 2 14.7 2 12s0-3 .06-4.1c.05-1.07.22-1.8.47-2.43.26-.66.6-1.22 1.15-1.77.55-.55 1.11-.9 1.77-1.15.63-.25 1.36-.42 2.43-.47C9 2.2 9.3 2.2 12 2.2zm0 1.98c-2.66 0-2.97 0-4.02.06-.87.04-1.34.18-1.66.3-.42.16-.71.36-1.03.68-.32.32-.51.61-.68 1.03-.12.32-.26.79-.3 1.66-.06 1.05-.06 1.36-.06 4.02s0 2.97.06 4.02c.04.87.18 1.34.3 1.66.16.42.36.71.68 1.03.32.32.61.51 1.03.68.32.12.79.26 1.66.3 1.05.06 1.36.06 4.02.06s2.97 0 4.02-.06c.87-.04 1.34-.18 1.66-.3.42-.16.71-.36 1.03-.68.32-.32.51-.61.68-1.03.12-.32.26-.79.3-1.66.06-1.05.06-1.36.06-4.02s0-2.97-.06-4.02c-.04-.87-.18-1.34-.3-1.66-.16-.42-.36-.71-.68-1.03-.32-.32-.61-.51-1.03-.68-.32-.12-.79-.26-1.66-.3-1.05-.06-1.36-.06-4.02-.06zm0 3.34a4.48 4.48 0 110 8.96 4.48 4.48 0 010-8.96zm0 1.98a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm4.66-2.2a1.05 1.05 0 110 2.1 1.05 1.05 0 010-2.1z"/></svg>
+        </a>
+        <a class="social-btn" href="#" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M16.5 2h-3v13.2a2.9 2.9 0 11-2.1-2.79V9.3a6 6 0 104.1 5.68V8.1a7.9 7.9 0 004.6 1.48V6.5a4.8 4.8 0 01-3.6-4.5z"/></svg>
+        </a>
+        <a class="social-btn" href="#" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M22 12s0-3.1-.4-4.6a3 3 0 00-2.1-2.1C17.9 4.9 12 4.9 12 4.9s-5.9 0-7.5.4A3 3 0 002.4 7.4C2 8.9 2 12 2 12s0 3.1.4 4.6a3 3 0 002.1 2.1C6.1 19.1 12 19.1 12 19.1s5.9 0 7.5-.4a3 3 0 002.1-2.1C22 15.1 22 12 22 12zM10 15.5v-7l6 3.5-6 3.5z"/></svg>
+        </a>
+      </div>
+    </div>
   </div>
  
   <footer>© TECHBUILD PC — YOUR RIG, YOUR RULES</footer>
@@ -617,6 +793,14 @@
       <h1>THE ARSENAL</h1>
       <p>Pull cards for every part of your rig — Budget, Mid-Range, or High-End. Build your dream deck, one drop at a time.</p>
     </div>
+
+    <div class="limited-banner">
+      <span class="pulse-dot"></span>
+      <div class="limited-banner-text">
+        <b>⚡ Limited Drop</b>
+        <p>A handful of parts are only available in very small quantities this run. Grab them before the deck reads "Sold out."</p>
+      </div>
+    </div>
  
     <div class="search-row">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -626,7 +810,7 @@
     <div class="filters" id="filters"></div>
     <div class="grid" id="grid"></div>
  
-    <footer>ALL PRICES ARE TYPICAL PHILIPPINE STREET ESTIMATES IN ₱ (PHP) — VERIFY BEFORE YOU BUY · LIMITED TO 50 UNITS PER PART</footer>
+    <footer>ALL PRICES ARE TYPICAL PHILIPPINE STREET ESTIMATES IN ₱ (PHP) — VERIFY BEFORE YOU BUY · LIMITED-DROP ITEMS ARE CAPPED AT VERY LOW UNITS PER PART</footer>
   </div>
 </section>
  
@@ -640,6 +824,41 @@
     </div>
     <div class="payment-grid" id="paymentGrid"></div>
     <footer>NEED HELP PAYING? MESSAGE US ON VIBER AT +63 917 234 5678</footer>
+  </div>
+</section>
+
+<!-- ================= ABOUT VIEW ================= -->
+<section id="aboutView" class="view">
+  <div class="wrap">
+    <div class="about-hero">
+      <p class="eyebrow">// who we are</p>
+      <h1>ABOUT TECHBUILD PC</h1>
+      <p>A Quezon City shop for builders, by builders — helping you turn a budget and a list of parts into a rig you're proud of.</p>
+    </div>
+
+    <div class="about-story">
+      <h3>Our Story</h3>
+      <p>TechBuild PC started as a small corner shop with one simple idea: buying PC parts shouldn't feel confusing or overwhelming. Whether you're a student assembling your very first budget desktop or an enthusiast chasing every last frame at 4K, you should be able to walk in, see exactly what fits your budget, and walk out ready to build.</p>
+      <p>That's why every part in our shop is sorted into three honest tiers — Budget, Mid-Range, and High-End — with real specs listed upfront, no jargon, no upselling. We test the builds we recommend, and we stand behind every part we sell.</p>
+      <h3 style="margin-top:18px;">Our Mission</h3>
+      <p>To make PC building approachable for everyone in Metro Manila — from first-time builders to seasoned enthusiasts — with honest pricing, real stock counts, and people who genuinely want to see your build succeed.</p>
+    </div>
+
+    <div class="about-grid" id="aboutGrid">
+      <div class="about-card">
+        <h3>Local & Hands-On</h3>
+        <p>Based in Quezon City, we test and bench every part before it goes on the shelf, so what you see in the deck is what actually performs.</p>
+      </div>
+      <div class="about-card">
+        <h3>No Guesswork Pricing</h3>
+        <p>Every card shows a real ₱ price and true stock count — what you see while browsing is exactly what you'll pay at checkout.</p>
+      </div>
+      <div class="about-card">
+        <h3>Built for Every Builder</h3>
+        <p>From a first budget desktop to a no-compromise 4K rig, our three tiers mean there's a smart pick at every price point.</p>
+      </div>
+    </div>
+    <footer>© TECHBUILD PC — QUEZON CITY, METRO MANILA</footer>
   </div>
 </section>
  
@@ -800,10 +1019,11 @@ const PRODUCTS = [
   { cat:'gpu', tier:'budget', name:'RTX 4060', desc:'Smooth 1080p gaming without breaking the bank — the perfect starter GPU.', fullDesc:'The RTX 4060 is the card most first-time gaming builds leave our shop with. It handles the vast majority of current titles at 1080p high settings with ray tracing available when you want it, sips power compared to higher-tier cards, and fits in nearly any case or PSU budget. If your monitor is 1080p, this is the smart, no-regrets choice.', spec:'8GB GDDR6 Memory', price:12750, bestSeller:false },
   { cat:'gpu', tier:'mid', name:'RTX 5070', desc:'Ray tracing and buttery-smooth 1440p — this is where gaming really opens up.', fullDesc:'The RTX 5070 is our most requested graphics card. It is genuinely built for 1440p gaming with ray tracing switched on, using the latest generation GDDR7 memory for a real bandwidth jump over the previous generation. Customers building a "no compromises but not crazy money" rig almost always end up here — it consistently outsells every other card in the shop.', spec:'12GB GDDR7 Memory', price:30150, bestSeller:true },
   { cat:'gpu', tier:'high', name:'RTX 5090', desc:'The dream card. 4K maxed out, every setting on, zero compromises.', fullDesc:'The RTX 5090 is the card for people who refuse to compromise. With 32GB of GDDR7 memory, it drives 4K gaming at maximum settings with ray tracing and frame generation on, and doubles as a genuine creative and AI workstation card for 3D rendering, video work, and machine learning. This is the halo product in our lineup, and it needs a serious PSU and case airflow to match.', spec:'32GB GDDR7 Memory', price:115900, bestSeller:false },
+  { cat:'gpu', tier:'high', name:'RTX 5090 Founders — Limited Drop', desc:'Only a handful of Founders Edition units this run — first come, first served.', fullDesc:'This is a very small, one-time allocation of Founders Edition RTX 5090 cards direct from our supplier. Same 32GB GDDR7 powerhouse as our standard 5090, but in the reference Founders shroud and cooler, which we almost never get stock of. Once these units are gone, we do not know when — or if — we will receive another batch.', spec:'32GB GDDR7 · Founders Edition', price:118500, bestSeller:false, limited:true, stock:4 },
  
   { cat:'ram', tier:'budget', name:'16GB DDR5-5200', desc:'Everything you need for browsing, office work, and everyday gaming.', fullDesc:'A 16GB DDR5-5200 dual-channel kit is the comfortable minimum for a modern Windows machine. It is plenty for browsing with dozens of tabs open, office and school work, and most games at their recommended settings. If your budget is tight, this is where to save without feeling it in daily use.', spec:'2x8GB · CL40', price:2600, bestSeller:false },
   { cat:'ram', tier:'mid', name:'32GB DDR5-6000', desc:'The sweet spot for modern games and heavy multitasking — grab it and forget about RAM.', fullDesc:'32GB of DDR5-6000 is our default recommendation for anyone building a gaming or creator PC in 2026. The higher clock speed noticeably helps AMD\'s current platform, and 32GB means you can game, stream, and have a browser full of tabs open at once without ever thinking about memory again. This is the kit that ships in the majority of our completed builds.', spec:'2x16GB · CL30', price:5500, bestSeller:true },
-  { cat:'ram', tier:'high', name:'64GB DDR5-6400', desc:'Streaming, editing, and gaming all at once — this kit doesn\'t flinch.', fullDesc:'64GB of high-speed DDR5-6400 is aimed at streamers, video editors, and anyone running several demanding applications simultaneously. It is overkill for pure gaming, but for content creation workflows, large Chrome-based tools, or virtual machines running alongside your main desktop, it removes memory as a bottleneck entirely.', spec:'2x32GB · CL30', price:12200, bestSeller:false },
+  { cat:'ram', tier:'high', name:'64GB DDR5-6400 — Limited RGB Edition', desc:'A short-run RGB heatspreader kit — very few sets left in the case.', fullDesc:'This is a limited-run version of our 64GB DDR5-6400 kit with a special RGB heatspreader finish that our supplier only produced in a small batch. Same overkill-for-gaming, perfect-for-creators performance as the standard kit, just dressed up — and once this batch sells out, the finish will not be restocked.', spec:'2x32GB · CL30 · RGB', price:13800, bestSeller:false, limited:true, stock:6 },
  
   { cat:'storage', tier:'budget', name:'500GB NVMe SSD', desc:'Lightning-fast boot times for a fraction of the cost of bigger drives.', fullDesc:'A 500GB Gen4 NVMe drive is a huge upgrade over any hard drive or SATA SSD, delivering near-instant boot and load times at a low entry price. It is a tight fit if you install many large modern games, but as a Windows and daily-driver boot drive paired with a bigger secondary drive later, it is excellent value.', spec:'Gen4 · ~3500MB/s', price:2300, bestSeller:false },
   { cat:'storage', tier:'mid', name:'1TB Gen4 NVMe', desc:'Plenty of room for your whole game library, loading in a blink.', fullDesc:'1TB of Gen4 NVMe storage is the capacity sweet spot for most builds — enough room for Windows, your most-played games, and your everyday files, with sequential speeds around 7000MB/s so everything from boot-up to level loads feels instant. This is the drive we install in the majority of the systems we sell.', spec:'Gen4 · ~7000MB/s', price:5800, bestSeller:true },
@@ -834,13 +1054,13 @@ const PRODUCTS = [
   { cat:'case', tier:'high', name:'Premium Showcase Unit', desc:'Built for full-tower, multi-radiator dream builds that turn heads.', fullDesc:'A premium full-ATX showcase case with four fans included, built with the internal space and airflow for full-tower, multi-radiator dream builds. If your build includes a flagship CPU, GPU, and a 360mm AIO, this is the case with the room and cooling potential to support it.', spec:'Full-ATX · 4 fans included', price:9800, bestSeller:false }
 ];
  
-// per-product remaining stock, capped at STOCK_LIMIT
-const stockLeft = PRODUCTS.map(()=>STOCK_LIMIT);
+// per-product remaining stock, capped at STOCK_LIMIT unless a custom stock is given (used for limited-drop items)
+const stockLeft = PRODUCTS.map(p => p.stock || STOCK_LIMIT);
  
 const peso = n => '₱' + n.toLocaleString('en-PH');
  
 /* ================= VIEW SWITCHING ================= */
-const VIEWS = ['home','products','payment','developers'];
+const VIEWS = ['home','products','payment','about','developers'];
 let statsAnimated = false;
  
 function switchView(view){
@@ -855,6 +1075,7 @@ function switchView(view){
   }
   if(view === 'products') renderGrid();
   if(view === 'payment') renderPayments();
+  if(view === 'about') observeReveal('.about-card');
   if(view === 'developers') renderDevelopers();
   window.scrollTo({top:0, behavior:'smooth'});
   if(view === 'home' && !statsAnimated) animateStats();
@@ -865,6 +1086,20 @@ document.querySelectorAll('.nav-link').forEach(btn => {
 });
 document.getElementById('enterShopBtn').addEventListener('click', () => switchView('products'));
 document.getElementById('logoBtn').addEventListener('click', () => switchView('home'));
+
+/* ================= THEME TOGGLE ================= */
+const SUN_ICON = `<circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>`;
+const MOON_ICON = `<path d="M20 14.5A8.5 8.5 0 1110 3.5a6.5 6.5 0 0010 11z"/>`;
+let currentTheme = 'dark';
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeIcon').innerHTML = currentTheme === 'dark' ? SUN_ICON : MOON_ICON;
+}
+document.getElementById('themeBtn').addEventListener('click', ()=>{
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+});
+applyTheme();
  
 function animateStats(){
   statsAnimated = true;
@@ -1092,7 +1327,7 @@ function renderGrid(){
     const remaining = stockLeft[i] - qty;
     const soldOut = remaining <= 0;
     const card = document.createElement('div');
-    card.className = 'card' + (soldOut ? ' sold-out' : '');
+    card.className = 'card' + (soldOut ? ' sold-out' : '') + (p.limited ? ' limited' : '');
     card.dataset.rarity = p.tier;
     card.dataset.idx = i;
     card.style.animationDelay = (order * 0.04) + 's';
@@ -1103,13 +1338,22 @@ function renderGrid(){
  
     let stockClass = '';
     if(soldOut) stockClass = 'out';
-    else if(remaining <= 10) stockClass = 'low';
+    else if(remaining <= (p.limited ? 3 : 10)) stockClass = 'low';
+
+    const stepperHtml = qty > 0
+      ? `<div class="card-stepper" data-idx="${i}">
+           <button class="step-dec" data-idx="${i}">−</button>
+           <span>${qty}</span>
+           <button class="step-inc" data-idx="${i}" ${remaining<=0?'disabled':''}>+</button>
+         </div>`
+      : `<button class="add-fab" data-idx="${i}" ${soldOut?'disabled':''}>${soldOut ? '✕' : '+'}</button>`;
  
     card.innerHTML = `
       <div class="foil"></div>
       <div class="holo"></div>
       <div class="rarity-tag"><span class="gem"></span>${TIER_LABEL[p.tier]}</div>
       ${p.bestSeller ? `<div class="best-seller-tag">★ Best Seller</div>` : ''}
+      ${p.limited ? `<div class="limited-tag"><span class="pulse-dot"></span>Limited</div>` : ''}
       <div class="price-tag">${peso(p.price)}</div>
       <div class="product-photo">${ICONS[p.cat]}</div>
       <div class="card-info">
@@ -1118,8 +1362,8 @@ function renderGrid(){
         <p class="card-flavor">${p.desc}</p>
         ${statLine}
       </div>
-      <div class="stock-tag ${stockClass}"><span class="stock-dot"></span>${soldOut ? 'Sold out' : remaining + ' left of ' + STOCK_LIMIT}</div>
-      <button class="add-fab ${qty>0?'added':''}" data-idx="${i}" ${soldOut?'disabled':''}>${soldOut ? '✕' : (qty>0?'✓':'+')}</button>
+      <div class="stock-tag ${stockClass}"><span class="stock-dot"></span>${soldOut ? 'Sold out' : remaining + ' left of ' + stockLeft[i]}</div>
+      ${stepperHtml}
     `;
  
     card.addEventListener('mousemove', e=>{
@@ -1137,7 +1381,7 @@ function renderGrid(){
     });
  
     card.addEventListener('click', e=>{
-      if(e.target.closest('.add-fab')) return;
+      if(e.target.closest('.add-fab') || e.target.closest('.card-stepper')) return;
       openModal(i);
     });
  
@@ -1150,10 +1394,19 @@ function renderGrid(){
       const idx = Number(btn.dataset.idx);
       const ok = addToDeck(idx);
       if(!ok) return;
-      btn.classList.add('added','pulse');
-      btn.textContent = '✓';
-      setTimeout(()=>btn.classList.remove('pulse'), 350);
       renderGrid();
+    });
+  });
+  grid.querySelectorAll('.step-inc').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      incDeck(Number(btn.dataset.idx));
+    });
+  });
+  grid.querySelectorAll('.step-dec').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      decDeck(Number(btn.dataset.idx));
     });
   });
 }
@@ -1162,7 +1415,8 @@ function renderGrid(){
 function openModal(idx){
   const p = PRODUCTS[idx];
   const catLabel = CATEGORIES.find(c=>c.id===p.cat).label;
-  const remaining = stockLeft[idx] - (deck[idx]||0);
+  const qty = deck[idx]||0;
+  const remaining = stockLeft[idx] - qty;
   const soldOut = remaining <= 0;
   const specRows = p.cat==='cpu'
     ? `<div class="row"><span>Cores / Threads</span><span>${p.cores}</span></div><div class="row"><span>Cache</span><span>${p.cache}</span></div>`
@@ -1173,21 +1427,27 @@ function openModal(idx){
     <div class="modal-icon-zone" style="color:var(--${p.tier});">${ICONS[p.cat]}</div>
     <div class="modal-body">
       <div class="rarity-tag" style="position:static;display:inline-flex;width:fit-content;"><span class="gem" style="background:var(--${p.tier})"></span>${TIER_LABEL[p.tier]} · ${TIER_SUB[p.tier]}</div>
-      <div class="card-cat">${catLabel}${p.bestSeller ? ' · ★ Best Seller' : ''}</div>
+      <div class="card-cat">${catLabel}${p.bestSeller ? ' · ★ Best Seller' : ''}${p.limited ? ' · ⚡ Limited Drop' : ''}</div>
       <h3 class="card-name" style="font-size:24px;">${p.name}</h3>
       <p class="modal-desc">${p.fullDesc || p.desc}</p>
-      <div class="modal-specs">${specRows}<div class="row"><span>Stock</span><span>${soldOut ? 'Sold out' : remaining + ' / ' + STOCK_LIMIT + ' available'}</span></div></div>
+      <div class="modal-specs">${specRows}<div class="row"><span>Stock</span><span>${soldOut ? 'Sold out' : remaining + ' / ' + stockLeft[idx] + ' available'}</span></div></div>
       <div class="deck-total-row" style="margin-top:4px;"><span>Price</span><span>${peso(p.price)}</span></div>
-      <button class="add-fab" style="position:static;width:100%;border-radius:12px;height:44px;" data-idx="${idx}" ${soldOut?'disabled':''}>${soldOut ? 'Sold Out' : 'Add to Deck'}</button>
+      <div class="modal-stepper" id="modalStepper">
+        <button id="modalDec" ${qty===0?'disabled':''}>−</button>
+        <span id="modalQty">${qty}</span>
+        <button id="modalInc" ${soldOut?'disabled':''}>+</button>
+      </div>
     </div>
   `;
   document.getElementById('modalOverlay').classList.add('show');
   modal.querySelector('#modalClose').addEventListener('click', closeModal);
-  const addBtn = modal.querySelector('.add-fab');
-  addBtn.addEventListener('click', ()=>{
-    addToDeck(idx);
-    renderGrid();
-    closeModal();
+  modal.querySelector('#modalInc').addEventListener('click', ()=>{
+    incDeck(idx);
+    openModal(idx);
+  });
+  modal.querySelector('#modalDec').addEventListener('click', ()=>{
+    decDeck(idx);
+    openModal(idx);
   });
 }
 function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); }
@@ -1270,3 +1530,5 @@ startBg();
 </script>
 </body>
 </html>
+techbuild-pc.html
+Displaying techbuild-pc.html.
