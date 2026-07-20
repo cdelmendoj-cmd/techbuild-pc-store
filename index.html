@@ -92,7 +92,7 @@
     display:flex;align-items:center;justify-content:center;
     box-shadow:0 0 10px rgba(255,110,199,.6);
   }
-
+ 
   .theme-btn{
     width:40px;height:40px;border-radius:50%;flex:0 0 auto;
     background:linear-gradient(160deg, var(--panel-2), var(--panel));
@@ -122,7 +122,7 @@
       radial-gradient(circle at 85% 20%, rgba(72,230,218,0.10), transparent 40%),
       radial-gradient(circle at 75% 90%, rgba(245,185,66,0.10), transparent 45%);
   }
-
+ 
   .bg-orb{
     position:absolute;border-radius:50%;
     filter:blur(70px);opacity:.4;z-index:0;pointer-events:none;
@@ -236,7 +236,7 @@
   .contact-label{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);}
   .contact-value{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16.5px;color:var(--ink);}
   .contact-sub{font-size:12px;color:var(--ink-dim);}
-
+ 
   /* ================= SOCIAL ROW ================= */
   .social-section{position:relative;z-index:2;text-align:center;padding:10px 20px 50px;}
   .social-label{
@@ -272,7 +272,7 @@
     animation:sheen 7s linear infinite;
   }
   .products-hero p{color:var(--ink-dim);font-size:14.5px;max-width:520px;margin:0 auto;line-height:1.6;}
-
+ 
   /* ================= LIMITED DROP BANNER ================= */
   .limited-banner{
     max-width:1040px;margin:0 auto 30px;position:relative;overflow:hidden;
@@ -470,7 +470,7 @@
   .add-fab.pulse{animation:pulse .35s ease;}
   .add-fab:disabled{background:#4a4460;cursor:not-allowed;box-shadow:none;}
   @keyframes pulse{50%{transform:scale(0.85);}}
-
+ 
   .card-stepper{
     position:absolute;bottom:12px;right:12px;z-index:5;
     display:flex;align-items:center;gap:7px;
@@ -611,7 +611,14 @@
   .dev-questions h3{font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--high);margin:0 0 14px;}
   .dev-questions ol{margin:0;padding-left:20px;color:var(--ink-dim);font-size:14px;line-height:2;}
   .dev-questions ol li{margin-bottom:4px;}
-
+  .qa-answer{
+    margin:6px 0 16px;padding:12px 16px;
+    background:rgba(124,108,240,0.08);border-left:3px solid var(--mid);
+    border-radius:0 10px 10px 0;
+    font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.65;color:var(--ink);
+  }
+  .qa-answer b{color:var(--cyan);font-family:'Rajdhani',sans-serif;letter-spacing:.04em;text-transform:uppercase;font-size:11px;display:block;margin-bottom:4px;}
+ 
   /* ================= ABOUT VIEW ================= */
   .about-hero{text-align:center;padding:50px 20px 20px;}
   .about-hero .eyebrow{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:.4em;color:var(--cyan);text-transform:uppercase;margin:0 0 12px;}
@@ -644,7 +651,7 @@
     .stats-row,.why-grid,.contact-grid,.payment-grid,.dev-grid,.about-grid{grid-template-columns:1fr;}
     .nav-links{display:none;}
   }
-
+ 
   /* ================= LIGHT MODE ================= */
   [data-theme="light"]{
     --bg:#f3f1fb;
@@ -661,9 +668,115 @@
   [data-theme="light"] .price-tag,
   [data-theme="light"] .stock-tag{background:rgba(255,255,255,0.7);}
   [data-theme="light"] .best-seller-tag{color:#241a05;}
+ 
+  /* ================= BOOT INTRO ANIMATION ================= */
+  .intro-splash{
+    position:fixed;inset:0;z-index:500;
+    background:radial-gradient(circle at 50% 42%, #201a3a, #0a0812 72%);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    transition:opacity .7s ease, visibility .7s ease;
+  }
+  .intro-splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  body.intro-active{overflow:hidden;}
+  .intro-skip{
+    position:absolute;top:22px;right:22px;z-index:20;
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+    background:rgba(255,255,255,0.06);border:1px solid var(--line);color:var(--ink-dim);
+    padding:9px 16px;border-radius:999px;cursor:pointer;
+    display:flex;align-items:center;gap:6px;
+    transition:all .18s ease;
+    opacity:0;animation:skipIn .5s ease forwards;animation-delay:.6s;
+  }
+  .intro-skip:hover{color:var(--ink);border-color:var(--mid);}
+  @keyframes skipIn{to{opacity:1;}}
+  .intro-orb{
+    position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;
+    animation:orbFloat 10s ease-in-out infinite;mix-blend-mode:screen;
+  }
+  .intro-content{position:relative;z-index:2;text-align:center;}
+  .intro-rig{position:relative;width:280px;height:220px;margin:0 auto 6px;}
+  .intro-part{
+    position:absolute;width:56px;height:56px;opacity:0;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+  }
+  .intro-part svg{width:100%;height:100%;}
+  .intro-part.p-cpu{top:0;left:8px;color:var(--budget);animation:flyTL 1.6s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:.15s;}
+  .intro-part.p-gpu{top:0;right:8px;color:var(--mid);animation:flyTR 1.6s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:.32s;}
+  .intro-part.p-ram{bottom:16px;left:0;color:var(--cyan);animation:flyBL 1.6s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:.5s;}
+  .intro-part.p-mobo{bottom:16px;right:0;color:var(--high);animation:flyBR 1.6s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:.68s;}
+  @keyframes flyTL{0%{opacity:0;transform:translate(-160px,-120px) scale(.3) rotate(-30deg);}55%{opacity:1;}100%{opacity:.9;transform:translate(72px,88px) scale(.85) rotate(0deg);}}
+  @keyframes flyTR{0%{opacity:0;transform:translate(160px,-120px) scale(.3) rotate(30deg);}55%{opacity:1;}100%{opacity:.9;transform:translate(-72px,88px) scale(.85) rotate(0deg);}}
+  @keyframes flyBL{0%{opacity:0;transform:translate(-160px,120px) scale(.3) rotate(30deg);}55%{opacity:1;}100%{opacity:.9;transform:translate(88px,-64px) scale(.85) rotate(0deg);}}
+  @keyframes flyBR{0%{opacity:0;transform:translate(160px,120px) scale(.3) rotate(-30deg);}55%{opacity:1;}100%{opacity:.9;transform:translate(-88px,-64px) scale(.85) rotate(0deg);}}
+  .intro-flash{
+    position:absolute;top:44%;left:50%;width:14px;height:14px;border-radius:50%;
+    background:#fff;transform:translate(-50%,-50%) scale(0);opacity:0;
+    animation:flashPulse 2.6s ease forwards;animation-delay:.4s;
+  }
+  @keyframes flashPulse{
+    0%,68%{opacity:0;transform:translate(-50%,-50%) scale(0);}
+    78%{opacity:1;transform:translate(-50%,-50%) scale(1);box-shadow:0 0 60px 30px rgba(124,108,240,.9);}
+    84%{opacity:.9;}
+    100%{opacity:0;transform:translate(-50%,-50%) scale(48);box-shadow:0 0 0 0 rgba(124,108,240,0);}
+  }
+  .intro-logo{
+    font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(28px,6vw,46px);
+    letter-spacing:.03em;margin:8px 0 6px;opacity:0;
+    transform:translateY(10px) scale(.94);
+    animation:logoIn .7s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:2.05s;
+  }
+  .intro-logo span{
+    background:linear-gradient(100deg, var(--ink) 10%, var(--mid) 35%, var(--pink) 55%, var(--high) 75%, var(--ink) 95%);
+    background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:sheen 5s linear infinite;
+  }
+  @keyframes logoIn{to{opacity:1;transform:translateY(0) scale(1);}}
+  .intro-tag{
+    font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:.35em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 22px;opacity:0;
+    animation:skipIn .6s ease forwards;animation-delay:2.35s;
+  }
+  .intro-progress{width:230px;height:3px;border-radius:99px;background:rgba(255,255,255,0.08);margin:0 auto;overflow:hidden;opacity:0;animation:skipIn .4s ease forwards;animation-delay:2.35s;}
+  .intro-progress-bar{
+    height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--cyan),var(--mid),var(--pink));
+    animation:fillBar 1.7s cubic-bezier(.3,.7,.4,1) forwards;animation-delay:2.4s;
+  }
+  @keyframes fillBar{to{width:100%;}}
+  @media (prefers-reduced-motion: reduce){
+    .intro-splash{display:none;}
+  }
 </style>
 </head>
-<body>
+<body class="intro-active">
+ 
+<!-- ================= BOOT INTRO ANIMATION ================= -->
+<div class="intro-splash" id="introSplash">
+  <button class="intro-skip" id="introSkip">Skip Intro ⏭</button>
+  <div class="intro-orb" style="width:300px;height:300px;top:-60px;left:-60px;background:var(--mid);"></div>
+  <div class="intro-orb" style="width:260px;height:260px;bottom:-60px;right:-40px;background:var(--cyan);animation-delay:-4s;"></div>
+  <div class="intro-content">
+    <div class="intro-rig">
+      <div class="intro-part p-cpu">
+        <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5" fill="currentColor" fill-opacity="0.2"/><rect x="6" y="6" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="0.5" fill="none" stroke="currentColor" stroke-width="1"/><path d="M9 2.5v3M12 2.5v3M15 2.5v3M9 18.5v3M12 18.5v3M15 18.5v3M2.5 9h3M2.5 12h3M2.5 15h3M18.5 9h3M18.5 12h3M18.5 15h3" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="intro-part p-gpu">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2" fill="currentColor" fill-opacity="0.2"/><rect x="2" y="7" width="20" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="7.5" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="14.5" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </div>
+      <div class="intro-part p-ram">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5" fill="currentColor" fill-opacity="0.18"/><rect x="3" y="4" width="18" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="4.5" y="16" width="2.4" height="4" fill="currentColor" fill-opacity="0.7"/><rect x="8" y="16" width="2.4" height="4" fill="currentColor" fill-opacity="0.7"/><rect x="11.5" y="16" width="2.4" height="4" fill="currentColor" fill-opacity="0.7"/><rect x="15" y="16" width="2.4" height="4" fill="currentColor" fill-opacity="0.7"/></svg>
+      </div>
+      <div class="intro-part p-mobo">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1.5" fill="currentColor" fill-opacity="0.16"/><rect x="3" y="3" width="18" height="18" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6" y="6" width="5" height="5" rx="0.5" fill="currentColor" fill-opacity="0.55"/><path d="M13 7h5M13 9.5h5M13 12h4M6 14h5v4H6z" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>
+      </div>
+      <div class="intro-flash"></div>
+    </div>
+    <h1 class="intro-logo">TECH<span>BUILD</span> PC</h1>
+    <p class="intro-tag">Assembling your arsenal...</p>
+    <div class="intro-progress"><div class="intro-progress-bar"></div></div>
+  </div>
+</div>
  
 <nav class="navbar">
   <button class="logo" id="logoBtn">TECH<span class="accent">BUILD</span><span class="tiny">PC</span></button>
@@ -753,7 +866,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="social-section">
       <p class="social-label">Follow the build</p>
       <div class="social-row">
@@ -784,7 +897,7 @@
       <h1>THE ARSENAL</h1>
       <p>Pull cards for every part of your rig — Budget, Mid-Range, or High-End. Build your dream deck, one drop at a time.</p>
     </div>
-
+ 
     <div class="limited-banner">
       <span class="pulse-dot"></span>
       <div class="limited-banner-text">
@@ -817,7 +930,7 @@
     <footer>NEED HELP PAYING? MESSAGE US ON VIBER AT +63 917 234 5678</footer>
   </div>
 </section>
-
+ 
 <!-- ================= ABOUT VIEW ================= -->
 <section id="aboutView" class="view">
   <div class="wrap">
@@ -826,7 +939,7 @@
       <h1>ABOUT TECHBUILD PC</h1>
       <p>A Quezon City shop for builders, by builders — helping you turn a budget and a list of parts into a rig you're proud of.</p>
     </div>
-
+ 
     <div class="about-story">
       <h3>Our Story</h3>
       <p>TechBuild PC started as a small corner shop with one simple idea: buying PC parts shouldn't feel confusing or overwhelming. Whether you're a student assembling your very first budget desktop or an enthusiast chasing every last frame at 4K, you should be able to walk in, see exactly what fits your budget, and walk out ready to build.</p>
@@ -834,7 +947,7 @@
       <h3 style="margin-top:18px;">Our Mission</h3>
       <p>To make PC building approachable for everyone in Metro Manila — from first-time builders to seasoned enthusiasts — with honest pricing, real stock counts, and people who genuinely want to see your build succeed.</p>
     </div>
-
+ 
     <div class="about-grid" id="aboutGrid">
       <div class="about-card">
         <h3>Local & Hands-On</h3>
@@ -864,11 +977,21 @@
     <div class="dev-questions">
       <h3>Study Questions</h3>
       <ol>
-        <li>Which desktop computer has the highest processing performance?</li>
-        <li>Which computer is most suitable for office work?</li>
-        <li>Which computer is recommended for gaming or graphic design?</li>
-        <li>Which desktop offers the best value for a student?</li>
-        <li>Which component contributes the most to overall system performance? Explain your answer.</li>
+        <li>Which desktop computer has the highest processing performance?
+          <div class="qa-answer"><b>Answer</b>A High-End tier build — Ryzen 9 9950X3D paired with an RTX 5090 — has the highest processing performance in our lineup. The 16-core/32-thread CPU with 3D V-Cache and the 32GB GDDR7 flagship GPU together deliver the most raw compute, rendering, and 4K gaming power of any combination we sell.</div>
+        </li>
+        <li>Which computer is most suitable for office work?
+          <div class="qa-answer"><b>Answer</b>A Budget tier build is most suitable for office work — a Ryzen 5 5500 CPU, 16GB of RAM, and a 500GB SSD comfortably handle browsing, documents, spreadsheets, and video calls without paying for gaming-grade power that office tasks never use.</div>
+        </li>
+        <li>Which computer is recommended for gaming or graphic design?
+          <div class="qa-answer"><b>Answer</b>A Mid-Range build (Ryzen 7 7700 + RTX 5070 + 32GB RAM) is our go-to recommendation for gaming or graphic design — it handles modern AAA titles at 1440p and creative software smoothly. For 4K gaming, competitive esports, or professional 3D/video work, the High-End tier with the RTX 5090 is the step up.</div>
+        </li>
+        <li>Which desktop offers the best value for a student?
+          <div class="qa-answer"><b>Answer</b>The Mid-Range tier offers the best value for a student — parts like the Ryzen 7 7700, RTX 5070, and 32GB of RAM balance strong everyday and gaming performance with a price that won't strain a student budget, and leave headroom for schoolwork, research, and creative projects alike.</div>
+        </li>
+        <li>Which component contributes the most to overall system performance? Explain your answer.
+          <div class="qa-answer"><b>Answer</b>The CPU and GPU contribute the most, and which one matters more depends on the task. The CPU sets the ceiling for everyday responsiveness, multitasking, and any workload that relies on single or multi-core speed (office work, compiling, streaming). The GPU is what drives gaming frame rates, ray tracing, video rendering, and AI workloads. A system is only as fast as its weakest major component, so the two should be balanced — pairing a flagship GPU with a weak CPU (or vice versa) creates a bottleneck that wastes the stronger part's potential.</div>
+        </li>
       </ol>
     </div>
     <footer>© TECHBUILD PC — BUILT BY THE TEAM ABOVE</footer>
@@ -1077,7 +1200,7 @@ document.querySelectorAll('.nav-link').forEach(btn => {
 });
 document.getElementById('enterShopBtn').addEventListener('click', () => switchView('products'));
 document.getElementById('logoBtn').addEventListener('click', () => switchView('home'));
-
+ 
 /* ================= THEME TOGGLE ================= */
 const SUN_ICON = `<circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>`;
 const MOON_ICON = `<path d="M20 14.5A8.5 8.5 0 1110 3.5a6.5 6.5 0 0010 11z"/>`;
@@ -1330,7 +1453,7 @@ function renderGrid(){
     let stockClass = '';
     if(soldOut) stockClass = 'out';
     else if(remaining <= (p.limited ? 3 : 10)) stockClass = 'low';
-
+ 
     const stepperHtml = qty > 0
       ? `<div class="card-stepper" data-idx="${i}">
            <button class="step-dec" data-idx="${i}">−</button>
@@ -1512,6 +1635,29 @@ document.getElementById('searchInput').addEventListener('input', e=>{
   searchTerm = e.target.value.trim().toLowerCase();
   renderGrid();
 });
+ 
+/* ================= BOOT INTRO ================= */
+(function(){
+  const splash = document.getElementById('introSplash');
+  const skipBtn = document.getElementById('introSkip');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dismissed = false;
+ 
+  function dismissIntro(){
+    if(dismissed) return;
+    dismissed = true;
+    splash.classList.add('hide');
+    document.body.classList.remove('intro-active');
+    setTimeout(() => { splash.style.display = 'none'; }, 750);
+  }
+ 
+  if(prefersReduced){
+    dismissIntro();
+  } else {
+    skipBtn.addEventListener('click', dismissIntro);
+    setTimeout(dismissIntro, 4300);
+  }
+})();
  
 /* ================= INIT ================= */
 renderFilters();
