@@ -578,6 +578,7 @@
   .compare-col[data-tier="high"] .compare-col-tier{color:var(--high);}
   .compare-col-sub{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:12.5px;color:var(--ink-dim);letter-spacing:.06em;text-transform:uppercase;margin:0 0 16px;}
   .compare-col-price{font-family:'Orbitron',sans-serif;font-weight:900;font-size:30px;color:var(--ink);}
+  .compare-col-price.small-range{font-size:22px;}
   .compare-col-price span{font-size:12.5px;font-family:'Rajdhani',sans-serif;font-weight:600;color:var(--ink-dim);display:block;margin-top:2px;text-transform:none;letter-spacing:.02em;}
  
   .compare-best-for{
@@ -588,6 +589,26 @@
   .compare-col[data-tier="budget"] .compare-best-for{border-left-color:var(--budget);background:rgba(143,151,173,0.08);}
   .compare-col[data-tier="high"] .compare-best-for{border-left-color:var(--high);background:rgba(245,185,66,0.08);}
   .compare-best-for b{color:var(--ink);font-family:'Rajdhani',sans-serif;letter-spacing:.03em;}
+ 
+  .compare-proscons{
+    margin:14px 22px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  }
+  .compare-proscons .pc-col{
+    border-radius:12px;padding:10px 12px;font-size:11.5px;line-height:1.5;
+  }
+  .compare-proscons .pc-col.pros{background:rgba(62,207,142,0.08);border-left:3px solid #3ecf8e;}
+  .compare-proscons .pc-col.cons{background:rgba(255,92,92,0.08);border-left:3px solid #ff5c5c;}
+  .compare-proscons .pc-col-title{
+    font-family:'Rajdhani',sans-serif;font-weight:800;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  .compare-proscons .pc-col.pros .pc-col-title{color:#3ecf8e;}
+  .compare-proscons .pc-col.cons .pc-col-title{color:#ff8f8f;}
+  .compare-proscons ul{margin:0;padding-left:16px;color:var(--ink-dim);}
+  .compare-proscons li{margin-bottom:4px;}
+  @media (max-width:900px){
+    .compare-proscons{grid-template-columns:1fr;}
+  }
  
   .compare-rows{padding:18px 22px 24px;display:flex;flex-direction:column;gap:0;}
   .compare-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
@@ -1311,7 +1332,7 @@ const PRODUCTS = [
   { cat:'mobo', tier:'mid', name:'B850 Balanced Board', desc:'Room to grow with PCIe 5.0 and cleaner power delivery for tomorrow\'s upgrades.', fullDesc:'The B850 Balanced Board steps up power delivery and adds PCIe 5.0 support for both your graphics card slot and primary M.2 storage, so your build has real upgrade headroom for the next few years. It is the board we pair with most of our mid and high-tier CPU sales because it does not bottleneck faster components while still staying reasonably priced.', spec:'DDR5 · PCIe 5.0', price:12500, bestSeller:false },
   { cat:'mobo', tier:'high', name:'X870E Flagship Board', desc:'No-compromise connectivity for builders chasing every last drop of performance.', fullDesc:'The X870E Flagship Board is built for people who plan to fully use a top-tier CPU and GPU. Dual USB4 ports, reinforced PCIe 5.0 slots, premium power delivery for sustained all-core overclocks, and top-shelf audio and networking make this the board we recommend alongside our highest-end processor and graphics card pairings.', spec:'DDR5 · Dual USB4', price:22000, bestSeller:false },
  
-  { cat:'gpu', tier:'budget', name:'RTX 4060', desc:'Smooth 1080p gaming without breaking the bank — the perfect starter GPU.', fullDesc:'The RTX 4060 is the card most first-time gaming builds leave our shop with. It handles the vast majority of current titles at 1080p high settings with ray tracing available when you want it, sips power compared to higher-tier cards, and fits in nearly any case or PSU budget. If your monitor is 1080p, this is the smart, no-regrets choice.', spec:'8GB GDDR6 Memory', price:19500, bestSeller:false },
+  { cat:'gpu', tier:'budget', name:'RTX 3050', desc:'A wallet-friendly entry into ray tracing and smooth 1080p gaming.', fullDesc:'The RTX 3050 is our recommended entry-level graphics card for a first gaming build. It comfortably handles current titles at 1080p on medium-to-high settings, supports ray tracing and DLSS when you want a visual boost, and keeps power draw and price low enough to fit almost any starter budget. If your monitor is 1080p and you are just getting into PC gaming, this is the sensible, low-risk pick.', spec:'8GB GDDR6 Memory', price:12500, bestSeller:false },
   { cat:'gpu', tier:'mid', name:'RTX 5070', desc:'Ray tracing and buttery-smooth 1440p — this is where gaming really opens up.', fullDesc:'The RTX 5070 is our most requested graphics card. It is genuinely built for 1440p gaming with ray tracing switched on, using the latest generation GDDR7 memory for a real bandwidth jump over the previous generation. Customers building a "no compromises but not crazy money" rig almost always end up here — it consistently outsells every other card in the shop.', spec:'12GB GDDR7 Memory', price:39500, bestSeller:true },
   { cat:'gpu', tier:'high', name:'RTX 5090', desc:'The dream card. 4K maxed out, every setting on, zero compromises.', fullDesc:'The RTX 5090 is the card for people who refuse to compromise. With 32GB of GDDR7 memory, it drives 4K gaming at maximum settings with ray tracing and frame generation on, and doubles as a genuine creative and AI workstation card for 3D rendering, video work, and machine learning. This is the halo product in our lineup, and it needs a serious PSU and case airflow to match.', spec:'32GB GDDR7 Memory', price:139000, bestSeller:false },
   { cat:'gpu', tier:'high', name:'RTX 5090 Founders — Limited Drop', desc:'Only a handful of Founders Edition units this run — first come, first served.', fullDesc:'This is a very small, one-time allocation of Founders Edition RTX 5090 cards direct from our supplier. Same 32GB GDDR7 powerhouse as our standard 5090, but in the reference Founders shroud and cooler, which we almost never get stock of. Once these units are gone, we do not know when — or if — we will receive another batch.', spec:'32GB GDDR7 · Founders Edition', price:145000, bestSeller:false, limited:true, stock:4 },
@@ -1811,17 +1832,55 @@ const COMPARE_META = {
   budget: {
     label:'Entry Level',
     sub:'Budget Build',
-    bestFor:'<b>Best for:</b> office work, schoolwork, browsing, and 1080p esports — a solid first build without overspending.'
+    bestFor:'<b>Best for:</b> office work, schoolwork, browsing, and 1080p esports — a solid first build without overspending.',
+    priceOverride: 35000,
+    pros: [
+      'Lowest upfront cost — easiest tier to save up for',
+      'Covers everyday computing, office work, and schoolwork with ease',
+      'Low power draw means smaller, cheaper PSU and quieter running',
+      'Simple to upgrade piece-by-piece later as your budget allows'
+    ],
+    cons: [
+      'Struggles with modern AAA games at high settings',
+      'Limited multitasking headroom for heavy creative work',
+      'Storage and RAM capacity are tight for large game libraries',
+      'Little upgrade ceiling before a full platform change is needed'
+    ]
   },
   mid: {
     label:'Mid Range',
     sub:'Balanced Build',
-    bestFor:'<b>Best for:</b> gaming at 1440p, streaming, and creative work — our most popular pick for students and everyday gamers.'
+    bestFor:'<b>Best for:</b> gaming at 1440p, streaming, and creative work — our most popular pick for students and everyday gamers.',
+    priceRange: '₱50,000 – ₱80,069',
+    pros: [
+      'Strong 1440p gaming performance with ray tracing available',
+      'Handles streaming, editing, and heavy multitasking comfortably',
+      'Best price-to-performance ratio of the three tiers',
+      'Enough headroom to stay relevant for several years'
+    ],
+    cons: [
+      'Noticeably pricier than the entry-level tier',
+      'Not quite enough for true 4K gaming at max settings',
+      'Higher power draw needs a larger PSU and better airflow',
+      'Still a step below flagship-level rendering and 3D performance'
+    ]
   },
   high: {
     label:'High End',
     sub:'Flagship Build',
-    bestFor:'<b>Best for:</b> 4K gaming, competitive esports, and professional 3D or video work — zero compromises.'
+    bestFor:'<b>Best for:</b> 4K gaming, competitive esports, and professional 3D or video work — zero compromises.',
+    pros: [
+      'Best possible performance — 4K gaming, esports, and pro workloads',
+      'Massive multitasking and rendering headroom for years to come',
+      'Top-tier components rarely become the bottleneck in any task',
+      'Highest resale and long-term upgrade value in the lineup'
+    ],
+    cons: [
+      'Highest upfront cost by a wide margin',
+      'Needs a larger case, stronger PSU, and better cooling to support it',
+      'Overkill for everyday browsing, office work, or schoolwork',
+      'Diminishing returns for users who do not need top-end performance'
+    ]
   }
 };
  
@@ -1873,6 +1932,15 @@ function renderComparison(){
         </div>`;
     }).join('');
  
+    // If a fixed priceRange string is provided, show that; otherwise fall back
+    // to priceOverride, then to the computed sum of the tier's parts.
+    const hasRange = typeof meta.priceRange === 'string';
+    const displayTotal = (typeof meta.priceOverride === 'number') ? meta.priceOverride : total;
+    const priceDisplay = hasRange ? meta.priceRange : peso(displayTotal);
+ 
+    const prosHtml = meta.pros.map(p => `<li>${p}</li>`).join('');
+    const consHtml = meta.cons.map(c => `<li>${c}</li>`).join('');
+ 
     const col = document.createElement('div');
     col.className = 'compare-col';
     col.dataset.tier = tier;
@@ -1882,9 +1950,19 @@ function renderComparison(){
         <div class="compare-col-gem"></div>
         <h3 class="compare-col-tier">${meta.label}</h3>
         <div class="compare-col-sub">${meta.sub}</div>
-        <div class="compare-col-price">${peso(total)}<span>Total build price</span></div>
+        <div class="compare-col-price${hasRange ? ' small-range' : ''}">${priceDisplay}<span>Total build price</span></div>
       </div>
       <div class="compare-best-for">${meta.bestFor}</div>
+      <div class="compare-proscons">
+        <div class="pc-col pros">
+          <p class="pc-col-title">Advantages</p>
+          <ul>${prosHtml}</ul>
+        </div>
+        <div class="pc-col cons">
+          <p class="pc-col-title">Disadvantages</p>
+          <ul>${consHtml}</ul>
+        </div>
+      </div>
       <div class="compare-rows">${rows}</div>
       <div class="compare-col-foot">
         <button class="compare-cta" data-tier="${tier}">Shop ${meta.label} Parts →</button>
