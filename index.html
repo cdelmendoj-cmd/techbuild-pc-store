@@ -1,6 +1,3 @@
-
-
-Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -308,26 +305,30 @@ Index · HTML
   }
   .products-hero p{color:var(--ink-dim);font-size:14.5px;max-width:520px;margin:0 auto;line-height:1.6;}
  
-  /* ================= LIMITED DROP BANNER ================= */
-  .limited-banner{
-    max-width:1040px;margin:0 auto 30px;position:relative;overflow:hidden;
-    border-radius:20px;border:1px solid rgba(255,110,199,0.4);
-    background:linear-gradient(115deg, rgba(255,110,199,0.12), rgba(124,108,240,0.12) 50%, rgba(245,185,66,0.12));
-    background-size:220% 220%;animation:foilmove 7s ease-in-out infinite;
-    padding:22px 26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  /* ================= TIER LEGEND ================= */
+  .tier-legend{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+    max-width:1040px;margin:0 auto 34px;
   }
-  .limited-banner .pulse-dot{
-    width:11px;height:11px;border-radius:50%;background:var(--pink);flex:0 0 11px;
-    box-shadow:0 0 0 0 rgba(255,110,199,0.7);animation:pulseDot 1.6s infinite;
+  .tier-legend-card{
+    background:linear-gradient(165deg,var(--panel-2),var(--panel));
+    border:1px solid var(--line);border-radius:18px;padding:22px 20px;
+    display:flex;flex-direction:column;gap:8px;
   }
-  @keyframes pulseDot{
-    0%{box-shadow:0 0 0 0 rgba(255,110,199,0.6);}
-    70%{box-shadow:0 0 0 10px rgba(255,110,199,0);}
-    100%{box-shadow:0 0 0 0 rgba(255,110,199,0);}
-  }
-  .limited-banner-text{flex:1;min-width:220px;}
-  .limited-banner-text b{font-family:'Rajdhani',sans-serif;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:13px;color:var(--pink);}
-  .limited-banner-text p{margin:4px 0 0;color:var(--ink-dim);font-size:13px;}
+  .tier-legend-card[data-tier="budget"]{border-color:rgba(143,151,173,0.4);}
+  .tier-legend-card[data-tier="mid"]{border-color:rgba(124,108,240,0.5);}
+  .tier-legend-card[data-tier="high"]{border-color:rgba(245,185,66,0.5);}
+  .tier-legend-head{display:flex;align-items:center;gap:9px;}
+  .tier-legend-gem{width:11px;height:11px;border-radius:3px;transform:rotate(45deg);flex:0 0 11px;}
+  .tier-legend-card[data-tier="budget"] .tier-legend-gem{background:var(--budget);}
+  .tier-legend-card[data-tier="mid"] .tier-legend-gem{background:var(--mid);box-shadow:0 0 8px var(--mid);}
+  .tier-legend-card[data-tier="high"] .tier-legend-gem{background:var(--high);box-shadow:0 0 8px var(--high);}
+  .tier-legend-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;}
+  .tier-legend-card[data-tier="budget"] .tier-legend-title{color:var(--budget);}
+  .tier-legend-card[data-tier="mid"] .tier-legend-title{color:#bcb2ff;}
+  .tier-legend-card[data-tier="high"] .tier-legend-title{color:var(--high);}
+  .tier-legend-sub{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);}
+  .tier-legend-desc{font-size:13px;color:var(--ink-dim);line-height:1.55;margin:0;}
  
   .search-row{max-width:520px;margin:0 auto 22px;position:relative;}
   .search-row svg{
@@ -780,7 +781,7 @@ Index · HTML
   .about-card p{color:var(--ink-dim);font-size:13.5px;line-height:1.55;margin:0;}
  
   @media (max-width:720px){
-    .stats-row,.why-grid,.contact-grid,.payment-grid,.dev-grid,.about-grid{grid-template-columns:1fr;}
+    .stats-row,.why-grid,.contact-grid,.payment-grid,.dev-grid,.about-grid,.tier-legend{grid-template-columns:1fr;}
     .nav-links{display:none;}
   }
  
@@ -1043,6 +1044,8 @@ Index · HTML
       <p>Pull cards for every part of your rig — Budget, Mid-Range, or High-End. Build your dream deck, one drop at a time.</p>
     </div>
  
+    <div class="tier-legend" id="tierLegend"></div>
+ 
     <div class="limited-banner">
       <span class="pulse-dot"></span>
       <div class="limited-banner-text">
@@ -1280,53 +1283,70 @@ const CATEGORIES = [
  
 const TIER_LABEL = { budget:'Budget', mid:'Mid', high:'High' };
 const TIER_SUB = { budget:'Entry Level', mid:'Mid Range', high:'High Performance' };
+const TIER_DESC = {
+  budget: {
+    title: 'Entry Level',
+    sub: 'Budget Tier',
+    desc: 'Reliable, no-frills parts for everyday computing — browsing, office work, schoolwork, and light 1080p gaming. Great value for a first build or a simple replacement PC.'
+  },
+  mid: {
+    title: 'Mid Range',
+    sub: 'Balanced Tier',
+    desc: 'The sweet spot for most builders — smooth 1440p gaming, streaming, and creative work. Strong everyday performance without paying for headroom you won\'t use.'
+  },
+  high: {
+    title: 'High End',
+    sub: 'Flagship Tier',
+    desc: 'No-compromise parts for 4K gaming, competitive esports, and professional rendering or 3D work. Built for enthusiasts who want the best available performance.'
+  }
+};
 const STOCK_LIMIT = 50;
  
 const PRODUCTS = [
-  { cat:'cpu', tier:'budget', name:'Ryzen 5 5500', desc:'Snappy everyday performance and smooth 1080p gaming, without the flagship price tag.', fullDesc:'The Ryzen 5 5500 is built for people who want a fast, dependable PC without paying for horsepower they will never use. Six cores and twelve threads handle browsing, office apps, streaming, and 1080p esports titles without breaking a sweat, and its low power draw means it pairs happily with budget motherboards and coolers. It is the chip we recommend most often for a first-time builder\'s starter rig.', cores:'6 Cores / 12 Threads', cache:'19MB Cache', price:6950, bestSeller:false },
-  { cat:'cpu', tier:'mid', name:'Ryzen 7 7700', desc:'The sweet spot — handles the newest titles and heavy multitasking with room to spare.', fullDesc:'The Ryzen 7 7700 is where price and performance meet in the middle. Eight cores and sixteen threads on the newer AM5 platform mean it chews through modern AAA games at high frame rates while still leaving plenty of headroom for streaming, video editing, or running a dozen browser tabs alongside Discord. Most of our customers building a serious gaming or content-creation rig this year land on this chip — it is our single best-selling processor.', cores:'8 Cores / 16 Threads', cache:'40MB Cache', price:16250, bestSeller:true },
-  { cat:'cpu', tier:'high', name:'Ryzen 9 9950X3D', desc:'The chip enthusiasts chase — 3D V-Cache muscle for 4K gaming and serious creator work.', fullDesc:'The Ryzen 9 9950X3D is AMD\'s flagship desktop processor, pairing sixteen cores and thirty-two threads with AMD\'s 3D V-Cache technology for a massive on-die memory pool. That extra cache is what pushes gaming frame rates well past what core count alone would predict, while the sheer thread count makes this the chip of choice for 4K/144Hz gaming, video rendering, 3D modelling, and any workload that used to mean reaching for a workstation CPU. This is the part enthusiasts and professionals build entire rigs around.', cores:'16 Cores / 32 Threads', cache:'144MB Cache', price:34800, bestSeller:false },
+  { cat:'cpu', tier:'budget', name:'Ryzen 5 5500', desc:'Snappy everyday performance and smooth 1080p gaming, without the flagship price tag.', fullDesc:'The Ryzen 5 5500 is built for people who want a fast, dependable PC without paying for horsepower they will never use. Six cores and twelve threads handle browsing, office apps, streaming, and 1080p esports titles without breaking a sweat, and its low power draw means it pairs happily with budget motherboards and coolers. It is the chip we recommend most often for a first-time builder\'s starter rig.', cores:'6 Cores / 12 Threads', cache:'19MB Cache', price:5200, bestSeller:false },
+  { cat:'cpu', tier:'mid', name:'Ryzen 7 7700', desc:'The sweet spot — handles the newest titles and heavy multitasking with room to spare.', fullDesc:'The Ryzen 7 7700 is where price and performance meet in the middle. Eight cores and sixteen threads on the newer AM5 platform mean it chews through modern AAA games at high frame rates while still leaving plenty of headroom for streaming, video editing, or running a dozen browser tabs alongside Discord. Most of our customers building a serious gaming or content-creation rig this year land on this chip — it is our single best-selling processor.', cores:'8 Cores / 16 Threads', cache:'40MB Cache', price:15500, bestSeller:true },
+  { cat:'cpu', tier:'high', name:'Ryzen 9 9950X3D', desc:'The chip enthusiasts chase — 3D V-Cache muscle for 4K gaming and serious creator work.', fullDesc:'The Ryzen 9 9950X3D is AMD\'s flagship desktop processor, pairing sixteen cores and thirty-two threads with AMD\'s 3D V-Cache technology for a massive on-die memory pool. That extra cache is what pushes gaming frame rates well past what core count alone would predict, while the sheer thread count makes this the chip of choice for 4K/144Hz gaming, video rendering, 3D modelling, and any workload that used to mean reaching for a workstation CPU. This is the part enthusiasts and professionals build entire rigs around.', cores:'16 Cores / 32 Threads', cache:'144MB Cache', price:48500, bestSeller:false },
  
-  { cat:'mobo', tier:'budget', name:'B650 Entry Board', desc:'Everything a first AM5 build needs — stable, dependable, and easy on the wallet.', fullDesc:'The B650 Entry Board gives you a clean, no-frills entry point into AMD\'s current AM5 platform. It supports DDR5 memory and PCIe 4.0 storage and graphics, has enough VRM headroom for every budget and mid-tier Ryzen chip we sell, and includes the basic connectivity most builders actually use day to day. If you are not chasing extreme overclocks, this board will run your system reliably for years.', spec:'DDR5 · PCIe 4.0', price:5800, bestSeller:false },
-  { cat:'mobo', tier:'mid', name:'B850 Balanced Board', desc:'Room to grow with PCIe 5.0 and cleaner power delivery for tomorrow\'s upgrades.', fullDesc:'The B850 Balanced Board steps up power delivery and adds PCIe 5.0 support for both your graphics card slot and primary M.2 storage, so your build has real upgrade headroom for the next few years. It is the board we pair with most of our mid and high-tier CPU sales because it does not bottleneck faster components while still staying reasonably priced.', spec:'DDR5 · PCIe 5.0', price:12750, bestSeller:false },
-  { cat:'mobo', tier:'high', name:'X870E Flagship Board', desc:'No-compromise connectivity for builders chasing every last drop of performance.', fullDesc:'The X870E Flagship Board is built for people who plan to fully use a top-tier CPU and GPU. Dual USB4 ports, reinforced PCIe 5.0 slots, premium power delivery for sustained all-core overclocks, and top-shelf audio and networking make this the board we recommend alongside our highest-end processor and graphics card pairings.', spec:'DDR5 · Dual USB4', price:29000, bestSeller:false },
+  { cat:'mobo', tier:'budget', name:'B650 Entry Board', desc:'Everything a first AM5 build needs — stable, dependable, and easy on the wallet.', fullDesc:'The B650 Entry Board gives you a clean, no-frills entry point into AMD\'s current AM5 platform. It supports DDR5 memory and PCIe 4.0 storage and graphics, has enough VRM headroom for every budget and mid-tier Ryzen chip we sell, and includes the basic connectivity most builders actually use day to day. If you are not chasing extreme overclocks, this board will run your system reliably for years.', spec:'DDR5 · PCIe 4.0', price:7500, bestSeller:false },
+  { cat:'mobo', tier:'mid', name:'B850 Balanced Board', desc:'Room to grow with PCIe 5.0 and cleaner power delivery for tomorrow\'s upgrades.', fullDesc:'The B850 Balanced Board steps up power delivery and adds PCIe 5.0 support for both your graphics card slot and primary M.2 storage, so your build has real upgrade headroom for the next few years. It is the board we pair with most of our mid and high-tier CPU sales because it does not bottleneck faster components while still staying reasonably priced.', spec:'DDR5 · PCIe 5.0', price:12500, bestSeller:false },
+  { cat:'mobo', tier:'high', name:'X870E Flagship Board', desc:'No-compromise connectivity for builders chasing every last drop of performance.', fullDesc:'The X870E Flagship Board is built for people who plan to fully use a top-tier CPU and GPU. Dual USB4 ports, reinforced PCIe 5.0 slots, premium power delivery for sustained all-core overclocks, and top-shelf audio and networking make this the board we recommend alongside our highest-end processor and graphics card pairings.', spec:'DDR5 · Dual USB4', price:22000, bestSeller:false },
  
-  { cat:'gpu', tier:'budget', name:'RTX 4060', desc:'Smooth 1080p gaming without breaking the bank — the perfect starter GPU.', fullDesc:'The RTX 4060 is the card most first-time gaming builds leave our shop with. It handles the vast majority of current titles at 1080p high settings with ray tracing available when you want it, sips power compared to higher-tier cards, and fits in nearly any case or PSU budget. If your monitor is 1080p, this is the smart, no-regrets choice.', spec:'8GB GDDR6 Memory', price:12750, bestSeller:false },
-  { cat:'gpu', tier:'mid', name:'RTX 5070', desc:'Ray tracing and buttery-smooth 1440p — this is where gaming really opens up.', fullDesc:'The RTX 5070 is our most requested graphics card. It is genuinely built for 1440p gaming with ray tracing switched on, using the latest generation GDDR7 memory for a real bandwidth jump over the previous generation. Customers building a "no compromises but not crazy money" rig almost always end up here — it consistently outsells every other card in the shop.', spec:'12GB GDDR7 Memory', price:30150, bestSeller:true },
-  { cat:'gpu', tier:'high', name:'RTX 5090', desc:'The dream card. 4K maxed out, every setting on, zero compromises.', fullDesc:'The RTX 5090 is the card for people who refuse to compromise. With 32GB of GDDR7 memory, it drives 4K gaming at maximum settings with ray tracing and frame generation on, and doubles as a genuine creative and AI workstation card for 3D rendering, video work, and machine learning. This is the halo product in our lineup, and it needs a serious PSU and case airflow to match.', spec:'32GB GDDR7 Memory', price:115900, bestSeller:false },
-  { cat:'gpu', tier:'high', name:'RTX 5090 Founders — Limited Drop', desc:'Only a handful of Founders Edition units this run — first come, first served.', fullDesc:'This is a very small, one-time allocation of Founders Edition RTX 5090 cards direct from our supplier. Same 32GB GDDR7 powerhouse as our standard 5090, but in the reference Founders shroud and cooler, which we almost never get stock of. Once these units are gone, we do not know when — or if — we will receive another batch.', spec:'32GB GDDR7 · Founders Edition', price:118500, bestSeller:false, limited:true, stock:4 },
+  { cat:'gpu', tier:'budget', name:'RTX 4060', desc:'Smooth 1080p gaming without breaking the bank — the perfect starter GPU.', fullDesc:'The RTX 4060 is the card most first-time gaming builds leave our shop with. It handles the vast majority of current titles at 1080p high settings with ray tracing available when you want it, sips power compared to higher-tier cards, and fits in nearly any case or PSU budget. If your monitor is 1080p, this is the smart, no-regrets choice.', spec:'8GB GDDR6 Memory', price:19500, bestSeller:false },
+  { cat:'gpu', tier:'mid', name:'RTX 5070', desc:'Ray tracing and buttery-smooth 1440p — this is where gaming really opens up.', fullDesc:'The RTX 5070 is our most requested graphics card. It is genuinely built for 1440p gaming with ray tracing switched on, using the latest generation GDDR7 memory for a real bandwidth jump over the previous generation. Customers building a "no compromises but not crazy money" rig almost always end up here — it consistently outsells every other card in the shop.', spec:'12GB GDDR7 Memory', price:39500, bestSeller:true },
+  { cat:'gpu', tier:'high', name:'RTX 5090', desc:'The dream card. 4K maxed out, every setting on, zero compromises.', fullDesc:'The RTX 5090 is the card for people who refuse to compromise. With 32GB of GDDR7 memory, it drives 4K gaming at maximum settings with ray tracing and frame generation on, and doubles as a genuine creative and AI workstation card for 3D rendering, video work, and machine learning. This is the halo product in our lineup, and it needs a serious PSU and case airflow to match.', spec:'32GB GDDR7 Memory', price:139000, bestSeller:false },
+  { cat:'gpu', tier:'high', name:'RTX 5090 Founders — Limited Drop', desc:'Only a handful of Founders Edition units this run — first come, first served.', fullDesc:'This is a very small, one-time allocation of Founders Edition RTX 5090 cards direct from our supplier. Same 32GB GDDR7 powerhouse as our standard 5090, but in the reference Founders shroud and cooler, which we almost never get stock of. Once these units are gone, we do not know when — or if — we will receive another batch.', spec:'32GB GDDR7 · Founders Edition', price:145000, bestSeller:false, limited:true, stock:4 },
  
-  { cat:'ram', tier:'budget', name:'16GB DDR5-5200', desc:'Everything you need for browsing, office work, and everyday gaming.', fullDesc:'A 16GB DDR5-5200 dual-channel kit is the comfortable minimum for a modern Windows machine. It is plenty for browsing with dozens of tabs open, office and school work, and most games at their recommended settings. If your budget is tight, this is where to save without feeling it in daily use.', spec:'2x8GB · CL40', price:2600, bestSeller:false },
-  { cat:'ram', tier:'mid', name:'32GB DDR5-6000', desc:'The sweet spot for modern games and heavy multitasking — grab it and forget about RAM.', fullDesc:'32GB of DDR5-6000 is our default recommendation for anyone building a gaming or creator PC in 2026. The higher clock speed noticeably helps AMD\'s current platform, and 32GB means you can game, stream, and have a browser full of tabs open at once without ever thinking about memory again. This is the kit that ships in the majority of our completed builds.', spec:'2x16GB · CL30', price:5500, bestSeller:true },
-  { cat:'ram', tier:'high', name:'64GB DDR5-6400 — Limited RGB Edition', desc:'A short-run RGB heatspreader kit — very few sets left in the case.', fullDesc:'This is a limited-run version of our 64GB DDR5-6400 kit with a special RGB heatspreader finish that our supplier only produced in a small batch. Same overkill-for-gaming, perfect-for-creators performance as the standard kit, just dressed up — and once this batch sells out, the finish will not be restocked.', spec:'2x32GB · CL30 · RGB', price:13800, bestSeller:false, limited:true, stock:6 },
+  { cat:'ram', tier:'budget', name:'16GB DDR5-5200', desc:'Everything you need for browsing, office work, and everyday gaming.', fullDesc:'A 16GB DDR5-5200 dual-channel kit is the comfortable minimum for a modern Windows machine. It is plenty for browsing with dozens of tabs open, office and school work, and most games at their recommended settings. If your budget is tight, this is where to save without feeling it in daily use.', spec:'2x8GB · CL40', price:2900, bestSeller:false },
+  { cat:'ram', tier:'mid', name:'32GB DDR5-6000', desc:'The sweet spot for modern games and heavy multitasking — grab it and forget about RAM.', fullDesc:'32GB of DDR5-6000 is our default recommendation for anyone building a gaming or creator PC in 2026. The higher clock speed noticeably helps AMD\'s current platform, and 32GB means you can game, stream, and have a browser full of tabs open at once without ever thinking about memory again. This is the kit that ships in the majority of our completed builds.', spec:'2x16GB · CL30', price:6000, bestSeller:true },
+  { cat:'ram', tier:'high', name:'64GB DDR5-6400 — Limited RGB Edition', desc:'A short-run RGB heatspreader kit — very few sets left in the case.', fullDesc:'This is a limited-run version of our 64GB DDR5-6400 kit with a special RGB heatspreader finish that our supplier only produced in a small batch. Same overkill-for-gaming, perfect-for-creators performance as the standard kit, just dressed up — and once this batch sells out, the finish will not be restocked.', spec:'2x32GB · CL30 · RGB', price:12500, bestSeller:false, limited:true, stock:6 },
  
-  { cat:'storage', tier:'budget', name:'500GB NVMe SSD', desc:'Lightning-fast boot times for a fraction of the cost of bigger drives.', fullDesc:'A 500GB Gen4 NVMe drive is a huge upgrade over any hard drive or SATA SSD, delivering near-instant boot and load times at a low entry price. It is a tight fit if you install many large modern games, but as a Windows and daily-driver boot drive paired with a bigger secondary drive later, it is excellent value.', spec:'Gen4 · ~3500MB/s', price:2300, bestSeller:false },
-  { cat:'storage', tier:'mid', name:'1TB Gen4 NVMe', desc:'Plenty of room for your whole game library, loading in a blink.', fullDesc:'1TB of Gen4 NVMe storage is the capacity sweet spot for most builds — enough room for Windows, your most-played games, and your everyday files, with sequential speeds around 7000MB/s so everything from boot-up to level loads feels instant. This is the drive we install in the majority of the systems we sell.', spec:'Gen4 · ~7000MB/s', price:5800, bestSeller:true },
-  { cat:'storage', tier:'high', name:'2TB Gen5 NVMe', desc:'Blistering Gen5 speed and space to spare for the biggest libraries.', fullDesc:'2TB of next-generation Gen5 NVMe storage roughly doubles the bandwidth of Gen4 drives, which matters for large game texture streaming, video editing scratch disks, and moving huge files quickly. Paired with a Gen5-capable motherboard, this drive keeps up with the fastest CPUs and GPUs in the shop without becoming the bottleneck.', spec:'Gen5 · ~12000MB/s', price:17400, bestSeller:false },
+  { cat:'storage', tier:'budget', name:'500GB NVMe SSD', desc:'Lightning-fast boot times for a fraction of the cost of bigger drives.', fullDesc:'A 500GB Gen4 NVMe drive is a huge upgrade over any hard drive or SATA SSD, delivering near-instant boot and load times at a low entry price. It is a tight fit if you install many large modern games, but as a Windows and daily-driver boot drive paired with a bigger secondary drive later, it is excellent value.', spec:'Gen4 · ~3500MB/s', price:2000, bestSeller:false },
+  { cat:'storage', tier:'mid', name:'1TB Gen4 NVMe', desc:'Plenty of room for your whole game library, loading in a blink.', fullDesc:'1TB of Gen4 NVMe storage is the capacity sweet spot for most builds — enough room for Windows, your most-played games, and your everyday files, with sequential speeds around 7000MB/s so everything from boot-up to level loads feels instant. This is the drive we install in the majority of the systems we sell.', spec:'Gen4 · ~7000MB/s', price:4000, bestSeller:true },
+  { cat:'storage', tier:'high', name:'2TB Gen5 NVMe', desc:'Blistering Gen5 speed and space to spare for the biggest libraries.', fullDesc:'2TB of next-generation Gen5 NVMe storage roughly doubles the bandwidth of Gen4 drives, which matters for large game texture streaming, video editing scratch disks, and moving huge files quickly. Paired with a Gen5-capable motherboard, this drive keeps up with the fastest CPUs and GPUs in the shop without becoming the bottleneck.', spec:'Gen5 · ~12000MB/s', price:10500, bestSeller:false },
  
-  { cat:'psu', tier:'budget', name:'550W 80+ Bronze', desc:'Reliable, efficient power that just works — no surprises, no drama.', fullDesc:'A 550W 80+ Bronze power supply is properly sized for entry-level gaming builds using budget-tier CPUs and GPUs. It carries solid protection circuitry and reasonable efficiency at a price that will not eat into the rest of your budget, and it is what we install in every starter rig that leaves the shop.', spec:'80+ Bronze', price:3200, bestSeller:false },
-  { cat:'psu', tier:'mid', name:'750W 80+ Gold', desc:'Quiet, efficient, and ready for a serious gaming rig with headroom to spare.', fullDesc:'750W of clean 80+ Gold-rated power gives a mid or high-tier gaming build real breathing room, including future GPU upgrades. The Gold efficiency rating means less wasted heat and a quieter fan curve under load, and it is our standard recommendation for anything built around a mid-range graphics card.', spec:'80+ Gold', price:6400, bestSeller:false },
-  { cat:'psu', tier:'high', name:'1000W 80+ Platinum', desc:'Top-tier efficiency built for flagship GPUs and multi-drive powerhouse builds.', fullDesc:'A 1000W 80+ Platinum unit is what we pair with flagship-tier GPUs and CPUs, or with builds packing multiple drives and liquid cooling pumps. Platinum efficiency keeps heat and noise down even under sustained full load, and the extra headroom means the PSU is never the limiting factor in a high-end system.', spec:'80+ Platinum', price:14500, bestSeller:false },
+  { cat:'psu', tier:'budget', name:'550W 80+ Bronze', desc:'Reliable, efficient power that just works — no surprises, no drama.', fullDesc:'A 550W 80+ Bronze power supply is properly sized for entry-level gaming builds using budget-tier CPUs and GPUs. It carries solid protection circuitry and reasonable efficiency at a price that will not eat into the rest of your budget, and it is what we install in every starter rig that leaves the shop.', spec:'80+ Bronze', price:2800, bestSeller:false },
+  { cat:'psu', tier:'mid', name:'750W 80+ Gold', desc:'Quiet, efficient, and ready for a serious gaming rig with headroom to spare.', fullDesc:'750W of clean 80+ Gold-rated power gives a mid or high-tier gaming build real breathing room, including future GPU upgrades. The Gold efficiency rating means less wasted heat and a quieter fan curve under load, and it is our standard recommendation for anything built around a mid-range graphics card.', spec:'80+ Gold', price:5800, bestSeller:false },
+  { cat:'psu', tier:'high', name:'1000W 80+ Platinum', desc:'Top-tier efficiency built for flagship GPUs and multi-drive powerhouse builds.', fullDesc:'A 1000W 80+ Platinum unit is what we pair with flagship-tier GPUs and CPUs, or with builds packing multiple drives and liquid cooling pumps. Platinum efficiency keeps heat and noise down even under sustained full load, and the extra headroom means the PSU is never the limiting factor in a high-end system.', spec:'80+ Platinum', price:11500, bestSeller:false },
  
-  { cat:'cooler', tier:'budget', name:'Basic Air Cooler', desc:'Keeps things cool and quiet for everyday use and light gaming sessions.', fullDesc:'A single-tower air cooler with four heatpipes is all a budget or mid-tier CPU really needs to stay cool under normal use, including light-to-moderate gaming sessions. It is quiet, needs zero maintenance, and is far more reliable long-term than entry liquid coolers at a similar price.', spec:'Single tower · 4 heatpipes', price:1450, bestSeller:false },
-  { cat:'cooler', tier:'mid', name:'Tower Air Cooler', desc:'Serious thermal headroom that handles mainstream CPUs without breaking a sweat.', fullDesc:'This dual-tower, dual-fan air cooler gives mainstream 6 and 8-core CPUs serious thermal headroom, keeping clocks high and temperatures low even during extended gaming or rendering sessions. Many builders choose air over liquid at this tier for the simplicity and zero pump-failure risk.', spec:'Dual tower · dual fan', price:4050, bestSeller:false },
-  { cat:'cooler', tier:'high', name:'360mm AIO Liquid Cooler', desc:'Maximum cooling for maximum performance — built for flagship CPUs pushed hard.', fullDesc:'A 360mm all-in-one liquid cooler is what flagship 16-core CPUs need to hold their boost clocks under sustained heavy load. The larger radiator surface area moves more heat with less fan noise than an equivalent air cooler could manage, which is exactly what a top-tier gaming or creator build needs.', spec:'360mm radiator', price:10450, bestSeller:false },
+  { cat:'cooler', tier:'budget', name:'Basic Air Cooler', desc:'Keeps things cool and quiet for everyday use and light gaming sessions.', fullDesc:'A single-tower air cooler with four heatpipes is all a budget or mid-tier CPU really needs to stay cool under normal use, including light-to-moderate gaming sessions. It is quiet, needs zero maintenance, and is far more reliable long-term than entry liquid coolers at a similar price.', spec:'Single tower · 4 heatpipes', price:1200, bestSeller:false },
+  { cat:'cooler', tier:'mid', name:'Tower Air Cooler', desc:'Serious thermal headroom that handles mainstream CPUs without breaking a sweat.', fullDesc:'This dual-tower, dual-fan air cooler gives mainstream 6 and 8-core CPUs serious thermal headroom, keeping clocks high and temperatures low even during extended gaming or rendering sessions. Many builders choose air over liquid at this tier for the simplicity and zero pump-failure risk.', spec:'Dual tower · dual fan', price:3000, bestSeller:false },
+  { cat:'cooler', tier:'high', name:'360mm AIO Liquid Cooler', desc:'Maximum cooling for maximum performance — built for flagship CPUs pushed hard.', fullDesc:'A 360mm all-in-one liquid cooler is what flagship 16-core CPUs need to hold their boost clocks under sustained heavy load. The larger radiator surface area moves more heat with less fan noise than an equivalent air cooler could manage, which is exactly what a top-tier gaming or creator build needs.', spec:'360mm radiator', price:7500, bestSeller:false },
  
-  { cat:'keyboard', tier:'budget', name:'Membrane Keyboard', desc:'Comfortable, quiet, and reliable — a solid daily driver for typing and gaming.', fullDesc:'A full-size wired membrane keyboard covers everyday typing, schoolwork, office tasks, and casual gaming without any fuss. It is quiet enough for shared spaces and durable enough to be a genuine long-term daily driver rather than a placeholder until you upgrade.', spec:'Full-size · wired', price:1150, bestSeller:false },
-  { cat:'keyboard', tier:'mid', name:'Mechanical Hot-Swap', desc:'That satisfying mechanical click, with switches you can swap to match your feel.', fullDesc:'This tenkeyless mechanical keyboard uses hot-swappable switch sockets, meaning you can try different switch feels and sounds without any soldering. It delivers the tactile, responsive typing and gaming feel mechanical fans want, in a size that leaves room for your mouse to roam.', spec:'TKL · hot-swap', price:3450, bestSeller:false },
-  { cat:'keyboard', tier:'high', name:'Premium Wireless Mech', desc:'Premium build quality, low-latency wireless — the keyboard your desk deserves.', fullDesc:'A gasket-mounted premium mechanical keyboard with low-latency 2.4GHz wireless connectivity, built for people who want their desk to look and feel as good as their PC performs. Premium keyboards like this are increasingly popular add-ons on our high-tier builds.', spec:'Gasket-mount · 2.4GHz', price:8700, bestSeller:false },
+  { cat:'keyboard', tier:'budget', name:'Membrane Keyboard', desc:'Comfortable, quiet, and reliable — a solid daily driver for typing and gaming.', fullDesc:'A full-size wired membrane keyboard covers everyday typing, schoolwork, office tasks, and casual gaming without any fuss. It is quiet enough for shared spaces and durable enough to be a genuine long-term daily driver rather than a placeholder until you upgrade.', spec:'Full-size · wired', price:800, bestSeller:false },
+  { cat:'keyboard', tier:'mid', name:'Mechanical Hot-Swap', desc:'That satisfying mechanical click, with switches you can swap to match your feel.', fullDesc:'This tenkeyless mechanical keyboard uses hot-swappable switch sockets, meaning you can try different switch feels and sounds without any soldering. It delivers the tactile, responsive typing and gaming feel mechanical fans want, in a size that leaves room for your mouse to roam.', spec:'TKL · hot-swap', price:2500, bestSeller:false },
+  { cat:'keyboard', tier:'high', name:'Premium Wireless Mech', desc:'Premium build quality, low-latency wireless — the keyboard your desk deserves.', fullDesc:'A gasket-mounted premium mechanical keyboard with low-latency 2.4GHz wireless connectivity, built for people who want their desk to look and feel as good as their PC performs. Premium keyboards like this are increasingly popular add-ons on our high-tier builds.', spec:'Gasket-mount · 2.4GHz', price:6500, bestSeller:false },
  
-  { cat:'mouse', tier:'budget', name:'Basic Wired Mouse', desc:'Simple, dependable clicking for work, browsing, and casual play.', fullDesc:'A dependable 6400 DPI wired mouse for everyday browsing, office work, and casual gaming. Nothing fancy, just a mouse that clicks reliably and tracks accurately for years without needing batteries or software.', spec:'6400 DPI · wired', price:650, bestSeller:false },
-  { cat:'mouse', tier:'mid', name:'Lightweight Wireless Mouse', desc:'Fast, precise, and cable-free — built for competitive gaming sessions.', fullDesc:'A lightweight wireless gaming mouse with a 26000 DPI sensor and a stable low-latency connection, built for players who want cable-free freedom without giving up competitive-level tracking accuracy.', spec:'26000 DPI · wireless', price:2950, bestSeller:false },
-  { cat:'mouse', tier:'high', name:'Flagship Esports Mouse', desc:'Ultra-light and razor precise — the mouse the pros reach for.', fullDesc:'This is the mouse serious and competitive players reach for — an ultra-light shell, a top-tier 32000 DPI sensor, and an 8000Hz polling rate for the lowest possible input latency. Paired with a high-refresh monitor, it is built to give you every possible edge.', spec:'32000 DPI · 8000Hz', price:6900, bestSeller:false },
+  { cat:'mouse', tier:'budget', name:'Basic Wired Mouse', desc:'Simple, dependable clicking for work, browsing, and casual play.', fullDesc:'A dependable 6400 DPI wired mouse for everyday browsing, office work, and casual gaming. Nothing fancy, just a mouse that clicks reliably and tracks accurately for years without needing batteries or software.', spec:'6400 DPI · wired', price:450, bestSeller:false },
+  { cat:'mouse', tier:'mid', name:'Lightweight Wireless Mouse', desc:'Fast, precise, and cable-free — built for competitive gaming sessions.', fullDesc:'A lightweight wireless gaming mouse with a 26000 DPI sensor and a stable low-latency connection, built for players who want cable-free freedom without giving up competitive-level tracking accuracy.', spec:'26000 DPI · wireless', price:2700, bestSeller:false },
+  { cat:'mouse', tier:'high', name:'Flagship Esports Mouse', desc:'Ultra-light and razor precise — the mouse the pros reach for.', fullDesc:'This is the mouse serious and competitive players reach for — an ultra-light shell, a top-tier 32000 DPI sensor, and an 8000Hz polling rate for the lowest possible input latency. Paired with a high-refresh monitor, it is built to give you every possible edge.', spec:'32000 DPI · 8000Hz', price:5800, bestSeller:false },
  
-  { cat:'monitor', tier:'budget', name:'24" 1080p 100Hz', desc:'Crisp, responsive, and easy on the eyes for work and everyday gaming.', fullDesc:'A 24-inch 1080p panel running at 100Hz is a comfortable step up from a standard 60Hz monitor, noticeably smoother for everyday gaming and browsing while staying easy on the budget. A great match for entry and mid-tier GPU builds.', spec:'1920x1080 · 100Hz', price:5200, bestSeller:false },
-  { cat:'monitor', tier:'mid', name:'27" 1440p 165Hz', desc:'Sharp and silky-smooth — the display that makes every game feel better.', fullDesc:'A 27-inch 1440p display running at 165Hz is the display upgrade that most transforms how a gaming PC feels to use — sharper detail than 1080p and dramatically smoother motion than 60Hz. It is the display we pair with our best-selling mid-tier GPU builds.', spec:'2560x1440 · 165Hz', price:11500, bestSeller:false },
-  { cat:'monitor', tier:'high', name:'27" 4K 240Hz OLED', desc:'Jaw-dropping color and near-instant response — a true centerpiece display.', fullDesc:'A 27-inch 4K OLED panel with a 240Hz refresh rate delivers perfect blacks, vivid color, and near-instant pixel response time, making it the true centerpiece of a flagship build. It needs a high-end GPU to fully drive at native resolution, which is exactly the tier of system it is built for.', spec:'3840x2160 · 240Hz OLED', price:42000, bestSeller:false },
+  { cat:'monitor', tier:'budget', name:'24" 1080p 100Hz', desc:'Crisp, responsive, and easy on the eyes for work and everyday gaming.', fullDesc:'A 24-inch 1080p panel running at 100Hz is a comfortable step up from a standard 60Hz monitor, noticeably smoother for everyday gaming and browsing while staying easy on the budget. A great match for entry and mid-tier GPU builds.', spec:'1920x1080 · 100Hz', price:5000, bestSeller:false },
+  { cat:'monitor', tier:'mid', name:'27" 1440p 165Hz', desc:'Sharp and silky-smooth — the display that makes every game feel better.', fullDesc:'A 27-inch 1440p display running at 165Hz is the display upgrade that most transforms how a gaming PC feels to use — sharper detail than 1080p and dramatically smoother motion than 60Hz. It is the display we pair with our best-selling mid-tier GPU builds.', spec:'2560x1440 · 165Hz', price:11000, bestSeller:false },
+  { cat:'monitor', tier:'high', name:'27" 4K 240Hz OLED', desc:'Jaw-dropping color and near-instant response — a true centerpiece display.', fullDesc:'A 27-inch 4K OLED panel with a 240Hz refresh rate delivers perfect blacks, vivid color, and near-instant pixel response time, making it the true centerpiece of a flagship build. It needs a high-end GPU to fully drive at native resolution, which is exactly the tier of system it is built for.', spec:'3840x2160 · 240Hz OLED', price:52000, bestSeller:false },
  
-  { cat:'case', tier:'budget', name:'Compact Airflow Unit', desc:'A tidy, budget-friendly case that still keeps your build breathing easy.', fullDesc:'A compact Micro-ATX case with two fans included, designed to keep a budget build cool without taking up much desk space. It is an easy, tidy first choice for anyone building their first system unit.', spec:'Micro-ATX · 2 fans included', price:2450, bestSeller:false },
-  { cat:'case', tier:'mid', name:'Mesh Tower Unit', desc:'Tempered glass looks with serious airflow — show off your build in style.', fullDesc:'A full ATX mesh-front case with a tempered glass side panel, built to show off your components while keeping airflow strong enough for a mid-to-high wattage build. This is the case most of our customers pick when they want their PC to look as good as it performs.', spec:'ATX · tempered glass', price:4950, bestSeller:false },
-  { cat:'case', tier:'high', name:'Premium Showcase Unit', desc:'Built for full-tower, multi-radiator dream builds that turn heads.', fullDesc:'A premium full-ATX showcase case with four fans included, built with the internal space and airflow for full-tower, multi-radiator dream builds. If your build includes a flagship CPU, GPU, and a 360mm AIO, this is the case with the room and cooling potential to support it.', spec:'Full-ATX · 4 fans included', price:9800, bestSeller:false }
+  { cat:'case', tier:'budget', name:'Compact Airflow Unit', desc:'A tidy, budget-friendly case that still keeps your build breathing easy.', fullDesc:'A compact Micro-ATX case with two fans included, designed to keep a budget build cool without taking up much desk space. It is an easy, tidy first choice for anyone building their first system unit.', spec:'Micro-ATX · 2 fans included', price:2200, bestSeller:false },
+  { cat:'case', tier:'mid', name:'Mesh Tower Unit', desc:'Tempered glass looks with serious airflow — show off your build in style.', fullDesc:'A full ATX mesh-front case with a tempered glass side panel, built to show off your components while keeping airflow strong enough for a mid-to-high wattage build. This is the case most of our customers pick when they want their PC to look as good as it performs.', spec:'ATX · tempered glass', price:4500, bestSeller:false },
+  { cat:'case', tier:'high', name:'Premium Showcase Unit', desc:'Built for full-tower, multi-radiator dream builds that turn heads.', fullDesc:'A premium full-ATX showcase case with four fans included, built with the internal space and airflow for full-tower, multi-radiator dream builds. If your build includes a flagship CPU, GPU, and a 360mm AIO, this is the case with the room and cooling potential to support it.', spec:'Full-ATX · 4 fans included', price:8500, bestSeller:false }
 ];
  
 // per-product remaining stock, capped at STOCK_LIMIT unless a custom stock is given (used for limited-drop items)
@@ -1350,7 +1370,7 @@ function switchView(view){
   } else {
     stopBg();
   }
-  if(view === 'products') renderGrid();
+  if(view === 'products') { renderTierLegend(); renderGrid(); }
   if(view === 'comparison') renderComparison();
   if(view === 'payment') renderPayments();
   if(view === 'about') observeReveal('.about-card');
@@ -1507,6 +1527,27 @@ function stopBg(){
   if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
 }
 window.addEventListener('resize', () => { if(bgRunning){ resizeCanvas(); initParticles(); } });
+ 
+/* ================= TIER LEGEND ================= */
+function renderTierLegend(){
+  const el = document.getElementById('tierLegend');
+  el.innerHTML = '';
+  ['budget','mid','high'].forEach(tier=>{
+    const t = TIER_DESC[tier];
+    const card = document.createElement('div');
+    card.className = 'tier-legend-card';
+    card.dataset.tier = tier;
+    card.innerHTML = `
+      <div class="tier-legend-head">
+        <span class="tier-legend-gem"></span>
+        <span class="tier-legend-title">${t.title}</span>
+      </div>
+      <div class="tier-legend-sub">${t.sub}</div>
+      <p class="tier-legend-desc">${t.desc}</p>
+    `;
+    el.appendChild(card);
+  });
+}
  
 /* ================= FILTERS ================= */
 let activeFilter = 'all';
@@ -1959,4 +2000,3 @@ startBg();
 </script>
 </body>
 </html>
- 
